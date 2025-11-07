@@ -12,7 +12,7 @@ export default function AddReceiptForm( { onAddReceipt }){
 
         onAddReceipt( {store, amount, date} );
 
-        //Clearnign the store, amount, and date inputs in form:
+        //Clearing the store, amount, and date inputs in form:
         setStore("");
         setAmount("");
         setDate("");

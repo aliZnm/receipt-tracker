@@ -1,0 +1,30 @@
+.app-container {
+  max-width: 600px;      /* Keeps content centered on big screens */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input, button {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  input, button {
+    font-size: 0.9rem;
+  }
+}
+
