@@ -1,27 +1,52 @@
 import { useState } from "react";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
-export default function SignupForm( {onSignup, onSwitch }){
+
+export default function SignupForm( { onSwitch }){
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
+const [error, setError] = useState("");
 
 
-const handleSubmit = (e) => {
+const handleEmailSignup = async (e) => {
     e.preventDefault();
-    if(!email || !password)
-        return;
-    onSignup( {email, password });
-    setEmail("");
-    setPassword("");
+    setError("");
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Signup Successful!");
+        setEmail("");
+        setPassword("");
+    }
+    catch(err){
+        setError(err.message);
+    }
+};
+
+const handleGoogleSignup = async () =>{
+    const provider = new GoogleAuthProvider();
+    try{
+        await signInWithPopup(auth, provider);
+        alert("Signed up with Google Successfully!");
+    }
+    catch(err){
+        setError(err.message);
+    }
 };
 
 return(
     <div>
         <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleEmailSignup}>
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="submit">Sign Up</button>
         </form>
+
+        <p>OR</p>
+        <button onClick={handleGoogleSignup}>Continue with Google</button>
+        {error && <p style={{ color: "red"}}>{error}</p>}
         <p>
             Already have an account? {" "}
             <button onClick={onSwitch}>Log In</button>

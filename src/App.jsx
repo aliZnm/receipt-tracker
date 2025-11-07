@@ -1,5 +1,7 @@
 import './App.css';
-import { useState } from "react";
+import {useEffect, useState} from "react";
+import {onAuthStateChanged, signOut} from 'firebase/auth';
+import {auth} from "./firebaseConfig";
 import LoginForm from "./components/LoginForm";
 import SignupForm from './components/SignUpForm';
 import AddReceiptForm from "./components/AddReceiptForm"
@@ -7,31 +9,35 @@ import AddReceiptForm from "./components/AddReceiptForm"
 function App(){
   //The state for recepits:
   const [receipts, setReceipts] = useState([]);
-
-  const [user, setUser] = useState(null);
+  //CHANGE THIS TO TRUE TO ENABLE SIGNUP/LOGIN FORMS
+  const developerMode = true;
+  const [user, setUser] = useState(developerMode ? {email: "dev@aaaa.com"} : null);
   const [showLogin, setShowLogin] = useState(false);
   
-  //Handeling:
-  const handleLogin = ({ email, password }) => {
-    setUser(email);
-  };
-
-  const handleSignup = (username) => {
-    setUser(username);
-  };
+  useEffect(() =>{
+    if(!developerMode){
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }
+  }, []);
 
 
   const toggleForm = () => setShowLogin(!showLogin);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
 
   if(!user){
     return(
       <div className='app-container'>
         {showLogin ? (
-          <LoginForm onLogin={handleLogin} />
+          <LoginForm onSwitch={toggleForm} />
         ) : (
-          <SignupForm onSignup={handleSignup} onSwitch={toggleForm} />
+          <SignupForm onSwitch={toggleForm} />
           )}
-
       </div>
     );
   }
@@ -40,14 +46,16 @@ function App(){
   //After user is logged in... show the receipt tracker
   return(
     <div className="app-container">
-      <h1>Receipt Tracker</h1>
+      <h1>Welcome, {user.email.split("@")[0]}!</h1>
+      <button onClick={handleLogout}>Logout</button>
+      <h2>Receipt Tracker</h2>
       <AddReceiptForm onAddReceipt={(receipt) => setReceipts([...receipts, receipt])} />
       
-      <h2>Receipts</h2>
+      <h3>Your Receipts</h3>
       <ul>
         {receipts.map((receipt, index) => (
           <li key={index}>
-            {receipt.name} - ${receipt.amount} on {receipt.date}
+            {receipt.store} - ${receipt.amount} on {receipt.date}
           </li>
         ))}
       </ul>
