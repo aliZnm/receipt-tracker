@@ -5,7 +5,7 @@
 #34495e
 */
 .app-container {
-  max-width: 600px;      /* Keeps content centered on big screens */
+  max-width: 600px;      
   margin: 0 auto;
   padding: 1rem;
 }
@@ -21,7 +21,6 @@ input, button {
   font-size: 1rem;
 }
 
-/* Responsive tweaks for smaller screens */
 @media (max-width: 480px) {
   h1 {
     font-size: 1.5rem;
