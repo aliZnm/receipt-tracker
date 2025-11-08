@@ -1,3 +1,9 @@
+/*Color pallet
+#e4f1fe
+#8dc6ff
+#22313f
+#34495e
+*/
 .app-container {
   max-width: 600px;      /* Keeps content centered on big screens */
   margin: 0 auto;
@@ -27,4 +33,3 @@ input, button {
     font-size: 0.9rem;
   }
 }
-
