@@ -1,16 +1,24 @@
 import { useState } from "react";
+import { addDoc, collection } from "firebase/firestore";
+import { auth, database } from "../firebaseConfig";
 
 export default function AddReceiptForm( { onAddReceipt }){
     const [store, setStore] = useState("");
     const [amount, setAmount] = useState("");
     const [date, setDate] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if(!store || !amount || !date) return;
 
+        const user = auth.currentUser;
+        if(!user) return alert("You must be logged in to add receipts.");
 
-        onAddReceipt( {store, amount, date} );
+        const newReceipt = {store, amount, date, uid: user.uid};
+        await addDoc(collection(database, "users", user.uid, "receipts"), newReceipt);
+
+
+        onAddReceipt(newReceipt);
 
         //Clearing the store, amount, and date inputs in form:
         setStore("");

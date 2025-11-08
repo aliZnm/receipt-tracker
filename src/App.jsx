@@ -5,14 +5,19 @@ import {auth} from "./firebaseConfig";
 import LoginForm from "./components/LoginForm";
 import SignupForm from './components/SignUpForm';
 import AddReceiptForm from "./components/AddReceiptForm"
+import { database } from './firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+
 
 function App(){
-  //The state for recepits:
   const [receipts, setReceipts] = useState([]);
-  //CHANGE THIS TO TRUE TO ENABLE SIGNUP/LOGIN FORMS
-  const developerMode = true;
+
+  //CHANGE TO TRUE TO ENABLE SIGNUP/LOGIN FORMS
+  const developerMode = false;
+
   const [user, setUser] = useState(developerMode ? {email: "dev@aaaa.com"} : null);
   const [showLogin, setShowLogin] = useState(false);
+  
   
   useEffect(() =>{
     if(!developerMode){
@@ -22,6 +27,19 @@ function App(){
     return () => unsubscribe();
   }
   }, []);
+
+
+
+  useEffect(() =>{
+  if(!user) return;
+
+  const fetchReceipts = async () =>{
+    const snapshot = await getDocs(collection(database, "users", user.uid, "receipts"));
+    const data = snapshot.docs.map((doc) => doc.data());
+    setReceipts(data);
+  };
+  fetchReceipts();
+}, [user]);
 
 
   const toggleForm = () => setShowLogin(!showLogin);

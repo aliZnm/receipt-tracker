@@ -1,14 +1,24 @@
 import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebaseConfig";
 
-export default function LoginForm( {onLogin }){
+export default function LoginForm({onSwitch }){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onLogin({ email, password });
-        setEmail("");
-        setPassword("");
+        
+        try{
+            await signInWithEmailAndPassword(auth, email, password);
+            setEmail("");
+            setPassword("");
+        }
+        catch (err){
+            setError("Invalid email or password. Try again.");
+            console.error(err);
+        }
     };
 
 
@@ -20,6 +30,12 @@ export default function LoginForm( {onLogin }){
                 <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                 <button type="submit">Login</button>
             </form>
+
+            {error && <p style={{color: "red"}}>{error}</p>}
+            <p>
+                Don't have an account?{" "}
+                <button onClick={onSwitch}>Sign Up</button>
+            </p>
         </div>
         
     );
