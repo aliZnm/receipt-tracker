@@ -43,14 +43,18 @@ return (
         <form onSubmit={handleEmailSignup}>
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          
+          {error && <p className="error-text">{error}</p>}
+
           <button type="submit">Sign Up</button>
         </form>
 
         <div className="or-container">
           <p className="or-text">OR</p>
-          <button className="google-button" onClick={handleGoogleSignup}>Continue with Google</button>
+          <button className="google-button" onClick={handleGoogleSignup}>Continue with Google
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo"/>
+          </button>
 
-          {error && <p className="error-text">{error}</p>}
 
           <p>
             Already have an account?{" "}

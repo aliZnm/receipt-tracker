@@ -41,15 +41,19 @@ export default function LoginForm({onSwitch }){
             <form onSubmit={handleSubmit}>
                 <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+                
+                {error && <p className="error-text">{error}</p>}
                 <button type="submit">Login</button>
+                
             </form>
             
         <div className="or-container">
             <p className="or-text">OR</p>
-            <button className="google-button" onClick={handleGoogleLogin}>Continue with Google</button>
+            <button className="google-button" onClick={handleGoogleLogin}>Login with Google
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo"/>
 
-            {error && <p className="error-text">{error}</p>}
-
+            </button>
+            
             <p>
                 Don’t have an account?{" "}
                 <button className="login-option-button" onClick={onSwitch}>Sign Up</button>
