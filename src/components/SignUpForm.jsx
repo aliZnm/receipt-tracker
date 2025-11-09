@@ -35,22 +35,29 @@ const handleGoogleSignup = async () =>{
     }
 };
 
-return(
+return (
     <div className="auth-container">
-        <form className="auth-card" onSubmit={handleEmailSignup}>
-            <h2>Sign Up</h2>
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button type="submit">Sign Up</button>
+      <div className="auth-card">
+        <h2 className="auth-title">Sign Up</h2>
+
+        <form onSubmit={handleEmailSignup}>
+          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <button type="submit">Sign Up</button>
         </form>
 
-        <p className="or-text">OR</p>
-        <button className="google-button" onClick={handleGoogleSignup}>Continue with Google</button>
-        {error && <p className="error-text" style={{ color: "red"}}>{error}</p>}
-        <p>
-            Already have an account? {" "}
+        <div className="or-container">
+          <p className="or-text">OR</p>
+          <button className="google-button" onClick={handleGoogleSignup}>Continue with Google</button>
+
+          {error && <p className="error-text">{error}</p>}
+
+          <p>
+            Already have an account?{" "}
             <button className="login-option-button" onClick={onSwitch}>Log In</button>
-        </p>
+          </p>
+        </div>
+      </div>
     </div>
-);
+  );
 }

@@ -31,29 +31,31 @@ export default function LoginForm({onSwitch }){
             setError(err.message);
         }
     };
-
-
-
-    return(
-        <div className="auth-container">
-            
-            <form className="auth-card" onSubmit={handleSubmit}>
-                <h2>Log In</h2>
+    
+    
+    
+    return (
+    <div className="auth-container">
+        <div className="auth-card">
+            <h2 className="auth-title">Log In</h2>
+            <form onSubmit={handleSubmit}>
                 <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
                 <button type="submit">Login</button>
             </form>
             
+        <div className="or-container">
             <p className="or-text">OR</p>
             <button className="google-button" onClick={handleGoogleLogin}>Continue with Google</button>
 
-            {error && <p className="error-text" style={{color: "red"}}>{error}</p>}
-            
+            {error && <p className="error-text">{error}</p>}
+
             <p>
-                Don't have an account?{" "}
-                <button className="login-option-button"onClick={onSwitch}>Sign Up</button>
+                Don’t have an account?{" "}
+                <button className="login-option-button" onClick={onSwitch}>Sign Up</button>
             </p>
         </div>
-        
-    );
+    </div>
+  </div>
+);
 }
