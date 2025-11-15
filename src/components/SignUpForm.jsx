@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
 
@@ -35,6 +35,17 @@ const handleGoogleSignup = async () =>{
     }
 };
 
+const handleAppleSignup = async () =>{
+  const provider = new OAuthProvider("apple.com");
+  try{
+    await signInWithPopup(auth, provider);
+    alert("Signed up with APple Successfully!");
+  }
+  catch(err){
+    setError(err.message);
+  }
+};
+
 return (
     <div className="auth-container">
       <div className="auth-card">
@@ -51,9 +62,18 @@ return (
 
         <div className="or-container">
           <p className="or-text">OR</p>
-          <button className="google-button" onClick={handleGoogleSignup}>Continue with Google
-            <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo"/>
-          </button>
+          
+          <div className="auth-buttons">
+            <button className="google-button" onClick={handleGoogleSignup}>
+              Continue with Google
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo social-logos"/>
+            </button>
+          
+            <button className="apple-button" onClick={handleAppleSignup}>
+              Continue with Apple
+              <img src="/src/assets/apple-logo.png" className="apple-logo social-logos"/>
+            </button>
+          </div>
 
 
           <p>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, OAuthProvider } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
 export default function LoginForm({onSwitch }){
@@ -32,6 +32,16 @@ export default function LoginForm({onSwitch }){
         }
     };
     
+    const handleAppleLogin = async () =>{
+    const provider = new OAuthProvider("apple.com");
+    try{
+        await signInWithPopup(auth, provider);
+        alert("Signed up with APple Successfully!");
+    }
+    catch(err){
+        setError(err.message);
+    }
+    };
     
     
     return (
@@ -49,10 +59,18 @@ export default function LoginForm({onSwitch }){
             
         <div className="or-container">
             <p className="or-text">OR</p>
-            <button className="google-button" onClick={handleGoogleLogin}>Login with Google
-                <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo"/>
 
-            </button>
+            <div className="auth-buttons">
+                <button className="google-button" onClick={handleGoogleLogin}>
+                    Login with Google
+                  <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="google-logo social-logos"/>
+                </button>
+
+                <button className="apple-button" onClick={handleAppleLogin}>
+                    Login with Apple
+                    <img src="/src/assets/apple-logo.png"  className="apple-logo social-logos" />
+                </button>
+            </div>
             
             <p>
                 Don’t have an account?{" "}
