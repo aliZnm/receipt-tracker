@@ -35,10 +35,23 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
       setIsSubmitting(true);
 
       // 1) Upload image to Firebase Storage
-      const filePath = `receipts/${user.uid}/${Date.now()}-${file.name}`;
-      const fileRef = ref(storage, filePath);
-      await uploadBytes(fileRef, file);
-      const imageUrl = await getDownloadURL(fileRef);
+    //   const filePath = `receipts/${user.uid}/${Date.now()}-${file.name}`;
+    //   const fileRef = ref(storage, filePath);
+    //   await uploadBytes(fileRef, file);
+    //   const imageUrl = await getDownloadURL(fileRef);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "receipt_upload");
+    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dc77fisjp/image/upload";
+    const response = await fetch(CLOUDINARY_URL, {
+      method: "POST",
+      body: formData,  
+    });
+
+    if(!response.ok) throw new Error("image upload failed");
+
+    const data = await response.json();
+    const imageUrl = data.secure_url;
 
       // 2) Save Firestore document
       const newReceipt = {
