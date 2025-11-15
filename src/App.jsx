@@ -84,9 +84,10 @@ function App() {
             <span className="brand-dot" />
             <span className="brand-name">ReceiptTracker</span>
           </div>
-          <button className="logout-button" onClick={handleLogout}>
-            Logout
-          </button>
+
+          {!activeAddForm && (
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
+          )}
         </header>
 
         {/* title row */}
@@ -99,10 +100,12 @@ function App() {
           </div>
           
           <div className="dashboard-actions">
-            <AddButton
-            buttonLabel="+ Add Receipt"
-            onAddManual={() => setActiveAddForm("manual")}
-            onAddScan={() => setActiveAddForm("scan")}/>
+            {!activeAddForm && (
+              <AddButton
+                buttonLabel="+ Add Receipt"
+                onAddManual={() => setActiveAddForm("manual")}
+                onAddScan={() => setActiveAddForm("scan")}/>
+                )}
           </div>
 
           {activeAddForm === "options" && (
@@ -125,7 +128,8 @@ function App() {
             onAddReceipt={(receipt) => {
               handleAddReceipt(receipt);
               setActiveAddForm(null);
-            }} />
+            }} 
+            onCancel={() => setActiveAddForm(null)}/>
           </div>
         )}
 

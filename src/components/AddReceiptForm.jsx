@@ -3,7 +3,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { auth, database, storage } from "../firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export default function AddReceiptForm({ onAddReceipt }) {
+export default function AddReceiptForm({ onAddReceipt, onCancel }) {
   const [store, setStore] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -74,61 +74,61 @@ export default function AddReceiptForm({ onAddReceipt }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="receipt-form">
-      {/* Upload area */}
-      <div className="upload-box">
-        <label className="upload-label">
-          {file ? (
-            <span className="upload-selected">📄 {file.name}</span>
-          ) : (
-            <>
-              <span className="upload-icon">⬆️</span>
-              <p>Upload Receipt Image</p>
-              <span className="upload-hint">Click to select a file</span>
-            </>
-          )}
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setFile(e.target.files[0] || null)}
-          />
-        </label>
-      </div>
-
-      {/* Details row */}
-      <div className="input-row">
-        <input
-          type="text"
-          placeholder="Store Name"
-          value={store}
-          onChange={(e) => setStore(e.target.value)}
-          className="styled-input"
-        />
-        <input
-          type="number"
-          step="0.01"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="styled-input"
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="styled-input"
-        />
-      </div>
-
-      {error && <p className="error-text">{error}</p>}
-
-      <button
-        type="submit"
-        className="submit-button"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Saving..." : "Add Receipt"}
-      </button>
-    </form>
+    <div className="recept-form-container">
+        <button type="button" className="cancel-button" onClick={onCancel}> <span style={{marginBottom: "5px"}}>x</span></button>
+        
+        <form onSubmit={handleSubmit} className="receipt-form">
+            <div className="input-column">
+                <input
+                    type="text"
+                    placeholder="Store Name"
+                    value={store}
+                    onChange={(e) => setStore(e.target.value)}
+                    className="styled-input"/>
+                <input
+                    type="number"
+                    step="0.01"
+                    placeholder="Amount"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    className="styled-input"/>
+                <input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="styled-input"/>
+            </div>
+            
+            <div className="upload-box small">
+                <label className="upload-label">
+                    {file ? (
+                        <span className="upload-selected">📄 {file.name}</span>
+                    ) : (
+                    <>
+                    <span className="upload-icon">
+                        <img src="/src/assets/upload-logo.png" style={{width: "50px", marginTop: "15px"}}/>
+                    </span>
+                    <p>Upload Receipt Image</p>
+                    <span className="upload-hint">Click to select a file</span>
+                    </>
+                )}
+                
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setFile(e.target.files[0] || null)}/>
+                </label>
+            </div>
+            
+            {error && <p className="error-text">{error}</p>}
+            
+            <button
+                type="submit"
+                className="submit-button"
+                disabled={isSubmitting}>
+            {isSubmitting ? "Saving..." : "Add"}
+            </button>
+        </form>
+    </div>
   );
 }
