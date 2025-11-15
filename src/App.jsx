@@ -6,7 +6,7 @@ import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignUpForm";
 import AddReceiptForm from "./components/AddReceiptForm";
 import { collection, getDocs } from "firebase/firestore";
-
+import ScanReceiptForm from "./components/ScanReceiptForm";
 function App() {
   const [receipts, setReceipts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -18,7 +18,7 @@ function App() {
     developerMode ? { email: "dev@aaaa.com", uid: "dev" } : null
   );
   const [showLogin, setShowLogin] = useState(false);
-
+  const [activeAddForm, setActiveAddForm] = useState(null);
   useEffect(() => {
     if (!developerMode) {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -97,17 +97,35 @@ function App() {
           <div className="dashboard-actions">
             <button
               className="primary-button"
-              onClick={() => setShowAddForm((prev) => !prev)}
+              onClick={() => setActiveAddForm((prev) => (prev ? null : "options"))}
             >
               + Add Receipt
             </button>
           </div>
+
+          {activeAddForm === "options" && (
+            <div className="add-options-panel">
+              <button className="primary-button" onClick={()=> setActiveAddForm("manual")}>M</button>
+              <button className="primary-button" onClick={() => setActiveAddForm("scan")}>S</button>
+            </div>
+          )}
         </section>
 
         {/* add form */}
-        {showAddForm && (
+        {activeAddForm === "manual" && (
           <div className="add-form-panel">
-            <AddReceiptForm onAddReceipt={handleAddReceipt} />
+            <AddReceiptForm 
+            onAddReceipt={(receipt) => {
+              handleAddReceipt(receipt);
+              setActiveAddForm(null);
+            }} />
+          </div>
+        )}
+
+        {activeAddForm === "scan" && (
+          <div className="add-form-panel">
+            <ScanReceiptForm
+            onAddReceipt={() => setActiveAddForm(null)} />
           </div>
         )}
 
