@@ -1,4 +1,4 @@
-/*Colors
+/* Colors
 #F5EDED
 #E2DAD6
 #7FA1C3
@@ -6,24 +6,34 @@
 #34495e
 */
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #7FA1C3; 
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: radial-gradient(circle at top left, #1c3b76 0%, #020b1f 55%, #000814 100%);
+}
+
+/* ---------- AUTH SCREENS ---------- */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .auth-card {
-  background-color: #ffffff; 
+  background-color: #ffffff;
   border-radius: 1rem;
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
   width: 350px;
@@ -39,18 +49,17 @@ html, body {
   padding: 0.7rem;
   border-radius: 0.5rem;
   border: none;
-  background-color: #ffffff; /* white box */
+  background-color: #ffffff;
   font-size: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* soft shadow around box */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.25s ease-in-out, transform 0.2s ease-in-out;
   margin-bottom: 28px;
   height: 25px;
 }
 
-
 .auth-card input:focus {
   outline: none;
-  box-shadow: 0 0 8px rgba(100, 130, 173, 0.6); /* blue glow on focus */
+  box-shadow: 0 0 8px rgba(100, 130, 173, 0.6);
 }
 
 .auth-card button[type="submit"] {
@@ -64,17 +73,12 @@ html, body {
   margin-top: 0.8rem;
 }
 
-
-
 .auth-card button[type="submit"]:hover {
-  background-color: #6482AD;
-
-
+  background-color: #6482ad;
 }
 
 .or-container {
   margin-top: 1.6rem;
-  
 }
 
 .or-text {
@@ -83,42 +87,10 @@ html, body {
   color: #22313f;
 }
 
-
-
-.google-button:hover {
-  background-color: #22313f;
-}
-
-.login-option-button {
-  background: none;
-  border: none;
-  color: #34495e;
-  cursor: pointer;
-  font-weight: bold;
-  text-decoration: underline;
-}
-.login-option-button:hover{
-  color: #6482AD;
-}
-
-.error-text {
-  color: red;
-  margin-top: 0.5rem;
-}
-
-.auth-title{
-  margin-bottom: 60px;
-  font-size: 33px;
-  color: #34495e;
-}
-
-
-
-
 .google-button {
   display: flex;
   align-items: center;
-  justify-content: center; /* centers contents horizontally */
+  justify-content: center;
   gap: 10px;
   background-color: #f3f3f3;
   color: #555555;
@@ -129,9 +101,8 @@ html, body {
   font-size: 0.95rem;
   font-weight: 500;
   width: 80%;
-  margin: 0.5rem auto;
+  margin: 0.5rem auto 2rem auto;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
 }
 
 .google-button:hover {
@@ -144,6 +115,305 @@ html, body {
   height: 27px;
 }
 
+.login-option-button {
+  background: none;
+  border: none;
+  color: #34495e;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-option-button:hover {
+  color: #6482ad;
+}
+
+.error-text {
+  color: red;
+  margin-top: 0.5rem;
+}
+
+.auth-title {
+  margin-bottom: 60px;
+  font-size: 33px;
+  color: #34495e;
+}
+
 button {
   transition: all 0.3s ease;
+}
+
+/* ---------- MAIN DASHBOARD ---------- */
+
+.app-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 1100px;
+  background: linear-gradient(145deg, #031833, #062b55);
+  border-radius: 24px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+  padding: 1.8rem 2.1rem 2.2rem 2.1rem;
+  color: #e9f4ff;
+}
+
+/* Top bar */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.brand-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #7df9ff, #1f8bff);
+  box-shadow: 0 0 12px rgba(125, 249, 255, 0.9);
+}
+
+.brand-name {
+  letter-spacing: 0.02em;
+}
+
+.logout-button {
+  background: rgba(4, 33, 78, 0.95);
+  color: #e7f1ff;
+  border: 1px solid rgba(143, 179, 237, 0.35);
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  backdrop-filter: blur(10px);
+}
+
+.logout-button:hover {
+  background: rgba(18, 56, 120, 1);
+}
+
+/* Title row */
+
+.dashboard-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.dashboard-text h1 {
+  margin: 0 0 0.35rem 0;
+  font-size: 2.1rem;
+}
+
+.dashboard-text p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #a8c4ff;
+  max-width: 360px;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: flex-start;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 16px 35px rgba(27, 118, 247, 0.6);
+}
+
+.primary-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 45px rgba(27, 118, 247, 0.8);
+}
+
+/* Add form panel */
+
+.add-form-panel {
+  margin-bottom: 1.3rem;
+  padding: 0.9rem 1rem;
+  border-radius: 16px;
+  background: rgba(5, 35, 80, 0.95);
+  border: 1px solid rgba(133, 170, 242, 0.4);
+}
+
+/* ----- Add Receipt Panel Styling ----- */
+
+.receipt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Upload Box */
+
+.upload-box {
+  width: 100%;
+  background: rgba(12, 32, 70, 0.6);
+  border: 1px dashed rgba(120, 155, 230, 0.5);
+  padding: 1.5rem;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.upload-box:hover {
+  background: rgba(22, 50, 98, 0.7);
+  border-color: rgba(150, 180, 245, 0.8);
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  color: #d8e4ff;
+  font-size: 0.95rem;
+}
+
+.upload-label input[type="file"] {
+  display: none;
+}
+
+.upload-icon {
+  font-size: 2rem;
+  opacity: 0.75;
+}
+
+.upload-hint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.upload-selected {
+  color: #9ac6ff;
+  font-size: 1rem;
+}
+
+/* Inputs row */
+
+.input-row {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.styled-input {
+  flex: 1;
+  min-width: 150px;
+  background: rgba(3, 18, 45, 0.85);
+  color: #e8efff;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 145, 215, 0.6);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.styled-input::placeholder {
+  color: #7da0d6;
+}
+
+.styled-input:focus {
+  border-color: #5ba8ff;
+  background: rgba(6, 26, 60, 0.9);
+}
+
+/* Submit Button */
+
+.submit-button {
+  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  align-self: flex-start;
+  box-shadow: 0 10px 25px rgba(27, 118, 247, 0.45);
+}
+
+.submit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 35px rgba(27, 118, 247, 0.65);
+}
+
+/* Cards grid */
+
+.receipts-section {
+  margin-top: 0.8rem;
+}
+
+.receipt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+  margin-top: 0.6rem;
+}
+
+.receipt-card {
+  background: rgba(5, 33, 76, 0.95);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(86, 127, 204, 0.65);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.receipt-card-header h2 {
+  margin: 0 0 0.2rem 0;
+  font-size: 1.05rem;
+}
+
+.receipt-date {
+  margin: 0.1rem 0 0.45rem 0;
+  font-size: 0.85rem;
+  color: #9cb4f0;
+}
+
+.receipt-amount {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #4fd0ff;
+}
+
+.receipt-subtext {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #7e9ad8;
+}
+
+.empty-text {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #90a9df;
 }
