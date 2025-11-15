@@ -530,8 +530,14 @@ button {
 }
 
 .upload-box.small {
-  padding: 1rem;         
-  font-size: 0.9rem;      
+  width: 100%;           
+  padding: 0.9rem 0.8rem; 
+  font-size: 0.9rem;
+  box-sizing: border-box; 
+  border-radius: 10px;    
+  border: 1px dashed rgba(120, 155, 230, 0.5);
+  background: rgba(12, 32, 70, 0.6);
+  text-align: center;
 }
 
 
