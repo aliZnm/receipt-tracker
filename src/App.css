@@ -478,6 +478,7 @@ button {
 .option-button:hover {
   transform: scale(1.1);
   box-shadow: 0 16px 35px rgba(27, 118, 247, 0.65);
+
 }
 
 
@@ -522,7 +523,3 @@ button {
   to { opacity: 1; }
 }
 
-/* Add small transition for hover */
-.option-button {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
