@@ -417,3 +417,65 @@ button {
   font-size: 0.9rem;
   color: #90a9df;
 }
+
+
+
+
+/*OPTIONS STYLING*/
+
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 10;
+}
+
+/* Add receipt options panel */
+.add-options-panel {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+
+  /* Position relative to the Add Receipt button */
+  top: 0; /* will align with button's top */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Circular option buttons */
+.option-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  box-shadow: 0 10px 25px rgba(27, 118, 247, 0.45);
+  margin: 8px 0; /* small margin so they are close */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Top button slightly above main button */
+.option-button.top {
+  transform: translateY(-70%);
+}
+
+/* Bottom button slightly below main button */
+.option-button.bottom {
+  transform: translateY(70%);
+}
+
+.option-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 16px 35px rgba(27, 118, 247, 0.65);
+}

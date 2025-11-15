@@ -7,6 +7,9 @@ import SignupForm from "./components/SignUpForm";
 import AddReceiptForm from "./components/AddReceiptForm";
 import { collection, getDocs } from "firebase/firestore";
 import ScanReceiptForm from "./components/ScanReceiptForm";
+import AddButton from "./components/AddButton";
+
+
 function App() {
   const [receipts, setReceipts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -94,21 +97,25 @@ function App() {
               Track, organize, and search your purchase history in one place.
             </p>
           </div>
+          
           <div className="dashboard-actions">
-            <button
-              className="primary-button"
-              onClick={() => setActiveAddForm((prev) => (prev ? null : "options"))}
-            >
-              + Add Receipt
-            </button>
+            <AddButton
+            buttonLabel="+ Add Receipt"
+            onAddManual={() => setActiveAddForm("manual")}
+            onAddScan={() => setActiveAddForm("scan")}/>
           </div>
 
           {activeAddForm === "options" && (
-            <div className="add-options-panel">
-              <button className="primary-button" onClick={()=> setActiveAddForm("manual")}>M</button>
-              <button className="primary-button" onClick={() => setActiveAddForm("scan")}>S</button>
-            </div>
+            <>
+              <div className="overlay" onClick={() => setActiveAddForm(null)}></div>
+              <div className="add-options-panel">
+                <button className="option-button top" onClick={() => setActiveAddForm("manual")}>M</button>
+                <button className="option-button bottom" onClick={() => setActiveAddForm("scan")}>S</button>
+              </div>
+            </>
           )}
+
+
         </section>
 
         {/* add form */}
