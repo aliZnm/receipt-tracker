@@ -358,8 +358,9 @@ button {
   font-size: 1rem;
   cursor: pointer;
   font-weight: 600;
-  align-self: flex-start;
+  align-self: center; /* centered horizontally */
   box-shadow: 0 10px 25px rgba(27, 118, 247, 0.45);
+  margin-top: 30px;
 }
 
 .submit-button:hover {
