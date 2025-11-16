@@ -137,6 +137,57 @@ button {
   color: #e9f4ff;
 }
 
+/* ---------------- TOP NAVBAR ---------------- */
+
+.top-navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0.6rem;
+  background: rgba(4, 28, 68, 0.7);
+  border-radius: 14px;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+}
+
+/* nav buttons */
+.nav-icon-button {
+  background: none;
+  border: none;
+  color: #e9f4ff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.nav-icon-button:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Brand centered */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e9f4ff;
+}
+
+/* account icon */
+.account-button {
+  font-size: 1.4rem;
+}
+
+.account-circle {
+  font-size: 1.3rem;
+  display: inline-block;
+  transform: translateY(2px);
+}
 /* Top bar */
 
 .dashboard-header {

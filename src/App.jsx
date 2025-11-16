@@ -79,15 +79,25 @@ function App() {
     <div className="app-root">
       <div className="dashboard">
         {/* top bar */}
-        <header className="dashboard-header">
-          <div className="brand">
+        <header className="top-navbar">
+          {/* LEFT: Logout */}
+          <button className="nav-icon-button" onClick={handleLogout}>
+            ⟵ Logout
+          </button>
+        
+          {/* CENTER: Brand */}
+          <div className="nav-brand">
             <span className="brand-dot" />
             <span className="brand-name">ReceiptTracker</span>
           </div>
-
-          {!activeAddForm && (
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
-          )}
+        
+          {/* RIGHT: Account Icon */}
+          <button 
+            className="nav-icon-button account-button"
+            onClick={() => setActiveAddForm("settings")}
+          >
+            <span className="account-circle">👤</span>
+          </button>
         </header>
 
         {/* title row */}
@@ -139,7 +149,20 @@ function App() {
             onAddReceipt={() => setActiveAddForm(null)} />
           </div>
         )}
-
+        {activeAddForm === "settings" && (
+          <div className="add-form-panel">
+            <h2 style={{ marginTop: 0 }}>Account Settings</h2>
+            <p>Email: {user?.email}</p>
+        
+            <button 
+              className="submit-button" 
+              onClick={() => setActiveAddForm(null)}
+              style={{ marginTop: "1rem" }}
+            >
+              Close
+            </button>
+          </div>
+        )}
         {/* cards */}
         <section className="receipts-section">
           <div className="receipt-grid">
