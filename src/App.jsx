@@ -79,26 +79,12 @@ function App() {
     <div className="app-root">
       <div className="dashboard">
         {/* top bar */}
-        <header className="top-navbar">
-          {/* LEFT: Logout */}
-          <button className="nav-icon-button" onClick={handleLogout}>
-            ⟵ Logout
-          </button>
-        
-          {/* CENTER: Brand */}
-          <div className="nav-brand">
-            <span className="brand-dot" />
-            <span className="brand-name">ReceiptTracker</span>
-          </div>
-        
-          {/* RIGHT: Account Icon */}
-          <button 
-            className="nav-icon-button account-button"
-            onClick={() => setActiveAddForm("settings")}
-          >
-            <span className="account-circle">👤</span>
-          </button>
-        </header>
+        <Navbar 
+            onLogout={handleLogout}
+            onOpenSettings={() => setActiveAddForm("settings")}
+            userEmail={user?.email}
+          />
+
 
         {/* title row */}
         <section className="dashboard-main">
