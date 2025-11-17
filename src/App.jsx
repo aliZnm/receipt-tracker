@@ -8,7 +8,7 @@ import AddReceiptForm from "./components/AddReceiptForm";
 import { collection, getDocs } from "firebase/firestore";
 import ScanReceiptForm from "./components/ScanReceiptForm";
 import AddButton from "./components/AddButton";
-
+import Navbar from "./components/Navbar";
 
 function App() {
   const [receipts, setReceipts] = useState([]);
