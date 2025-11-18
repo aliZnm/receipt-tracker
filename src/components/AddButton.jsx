@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import AddReceiptForm from "./AddReceiptForm";
 import ScanReceiptForm from "./ScanReceiptForm";
 
-function AddButton({ buttonLabel = "+", onAddManual, onAddScan }) {
+export default function AddButton({ buttonLabel = "+", onAddManual, onAddScan }) {
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
 
@@ -69,5 +69,3 @@ function AddButton({ buttonLabel = "+", onAddManual, onAddScan }) {
     </div>
   );
 }
-
-export default AddButton;

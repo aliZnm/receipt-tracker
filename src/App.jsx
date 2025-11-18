@@ -15,7 +15,7 @@ function App() {
   const [showAddForm, setShowAddForm] = useState(false);
 
   // set to true if you want to bypass auth during testing
-  const developerMode = false;
+  const developerMode = true;
 
   const [user, setUser] = useState(
     developerMode ? { email: "dev@aaaa.com", uid: "dev" } : null
@@ -76,14 +76,17 @@ function App() {
 
   // Logged in: dashboard
   return (
-    <div className="app-root">
-      <div className="dashboard">
-        {/* top bar */}
-        <Navbar 
+    <>
+    <Navbar 
             onLogout={handleLogout}
             onOpenSettings={() => setActiveAddForm("settings")}
             userEmail={user?.email}
           />
+
+    <div className="app-root">
+      <div className="dashboard">
+        {/* top bar */}
+        
 
 
         {/* title row */}
@@ -104,15 +107,7 @@ function App() {
                 )}
           </div>
 
-          {activeAddForm === "options" && (
-            <>
-              <div className="overlay" onClick={() => setActiveAddForm(null)}></div>
-              <div className="add-options-panel">
-                <button className="option-button top" onClick={() => setActiveAddForm("manual")}>M</button>
-                <button className="option-button bottom" onClick={() => setActiveAddForm("scan")}>S</button>
-              </div>
-            </>
-          )}
+          
 
 
         </section>
@@ -176,6 +171,7 @@ function App() {
         </section>
       </div>
     </div>
+  </>
   );
 }
 

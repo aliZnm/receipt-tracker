@@ -7,7 +7,7 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
       {/* LEFT — Logout button */}
       <button
         type="button"
-        className="nav-icon-button"
+        className="logout-button"
         onClick={onLogout}
       >
         ⟵ Logout
@@ -26,7 +26,8 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
         onClick={onOpenSettings}
         aria-label="Open Settings"
       >
-        <span className="account-circle">👤</span>
+            <img className="account-img" src="/src/assets/account-logo.png" alt="account" />
+        
       </button>
 
     </header>
