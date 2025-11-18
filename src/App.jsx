@@ -13,6 +13,7 @@ import Navbar from "./components/Navbar";
 function App() {
   const [receipts, setReceipts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [viewingReceipt, setViewingReceipt] = useState(null);
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -154,21 +155,51 @@ function App() {
             )}
 
             {receipts.map((receipt) => (
-              <div className="receipt-card" key={receipt.id}>
+              <div className="receipt-card" key={receipt.id} onClick={() => setViewingReceipt(receipt)} style={{cursor: "pointer"}}>
                 <div className="receipt-card-header">
                   <h2>{receipt.store}</h2>
                 </div>
                 <p className="receipt-date">{receipt.date}</p>
-                <p className="receipt-amount">
-                  ${Number(receipt.amount).toFixed(2)}
-                </p>
+                <p className="receipt-amount">${Number(receipt.amount).toFixed(2)}</p>
                 <p className="receipt-subtext">
-                  Tap to view photo, category, and more details.
+                  Tap to view receipt
                 </p>
               </div>
             ))}
           </div>
         </section>
+
+        {viewingReceipt && viewingReceipt.imageUrl && (
+          <div className="receipt-modal">
+            <div style={{
+              position: "relative",
+              background: "linear-gradient(135deg,rgb(14, 41, 73),rgb(78, 128, 153))",
+              padding: "10px",
+              borderRadius: "10px",
+              display: "inline-block",
+              
+            }}>
+              <button onClick={() => setViewingReceipt(null)}
+                style={{
+                  position: "absolute",
+                  top: "-20px",
+                  left: "-15px",
+                  background: "linear-gradient(135deg, #2a8bff, #4fc3ff)",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "50px",
+                  height: "50px",
+                  cursor: "pointer",
+                  fontSize: "25px",
+                  boxShadow: "0px 0px 5px 3px black",
+                  }}>
+                    x
+                  </button>
+                  <img src={viewingReceipt.imageUrl} alt="Receipt" style={{ maxWidth: "80vw", maxHeight: "80vh", display: "block" }}/>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   </>

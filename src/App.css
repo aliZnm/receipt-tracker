@@ -481,6 +481,9 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   border: 1px solid rgba(86, 127, 204, 0.65);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
 }
+.receipt-card:hover{
+  border: 1.2px solid rgba(133, 169, 235, 0.7);
+}
 
 .receipt-card-header h2 {
   margin: 0 0 0.2rem 0;
@@ -505,6 +508,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   font-size: 0.8rem;
   color: #7e9ad8;
 }
+
 
 .empty-text {
   margin-top: 0.6rem;
@@ -715,5 +719,20 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   height: 30px;
   object-fit: contain;
   display: inline-block;
+}
+
+
+
+.receipt-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
