@@ -20,15 +20,13 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
       </div>
 
       {/* RIGHT — Account Icon */}
-      <button
-        type="button"
-        className="nav-icon-button account-button"
-        onClick={onOpenSettings}
-        aria-label="Open Settings"
-      >
-            <img className="account-img" src="/src/assets/account-logo.png" alt="account" />
-        
-      </button>
+      <div className="account-icon"
+      onClick={onOpenSettings} 
+      role="button"
+      tabIndex={0}
+      aria-label="Open Setting">
+        <img src="/src/assets/account-logo.png" alt="Account" className="account-img" />
+      </div>
 
     </header>
   );

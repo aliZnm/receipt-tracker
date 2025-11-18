@@ -184,14 +184,27 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 }
 
 
-
-
-.account-img {
-  width: 27px;
-  object-fit: contain;
-  margin-left: 4px;
-  margin-bottom: 2px;
+.account-icon {
+  display: inline-block;
+  cursor: pointer;
+  margin-right: 15px;
 }
+
+.account-icon img {
+  width: 33px; /* adjust size */
+
+  object-fit: contain;
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.account-icon:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 5px rgba(42, 139, 255, 0.5))
+          drop-shadow(0 0 10px rgba(79, 195, 255, 0.20))
+          drop-shadow(0 0 15px rgba(42, 139, 255, 0.2));
+}
+
+
 
 
 
