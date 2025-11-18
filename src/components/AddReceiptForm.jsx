@@ -20,10 +20,7 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
       return;
     }
 
-    if (!file) {
-      setError("Please upload a picture of your receipt.");
-      return;
-    }
+   
 
     const user = auth.currentUser;
     if (!user) {
@@ -34,6 +31,8 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
     try {
       setIsSubmitting(true);
 
+      let imageUrl = "";
+      if(file){
       // 1) Upload image to Firebase Storage
     //   const filePath = `receipts/${user.uid}/${Date.now()}-${file.name}`;
     //   const fileRef = ref(storage, filePath);
@@ -51,8 +50,8 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
     if(!response.ok) throw new Error("image upload failed");
 
     const data = await response.json();
-    const imageUrl = data.secure_url;
-
+    imageUrl = data.secure_url;
+}
       // 2) Save Firestore document
       const newReceipt = {
         store,
