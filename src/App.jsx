@@ -173,7 +173,7 @@ function App() {
           <div className="receipt-modal">
             <div style={{
               position: "relative",
-              background: "linear-gradient(135deg,rgb(14, 41, 73),rgb(78, 128, 153))",
+              background: "black",
               padding: "10px",
               borderRadius: "10px",
               display: "inline-block",
