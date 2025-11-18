@@ -122,11 +122,12 @@ button {
 .app-root {
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;   /* top aligned */
-  justify-content: center;
-  padding: 1rem;
+  flex-direction: column; /* so content stacks */
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 1rem 2rem 1rem;
   box-sizing: border-box;
-  padding-top: 60px;        /* adjust how far from top */
+  background: radial-gradient(circle at top left, #1c3b76 0%, #020b1f 55%, #000814 100%);
 }
 
 .dashboard {
