@@ -118,16 +118,15 @@ button {
   transition: all 0.3s ease;
 }
 
-/* ---------- MAIN DASHBOARD ---------- */
 
 .app-root {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* top aligned */
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   box-sizing: border-box;
-  padding-top: 90px;
+  padding-top: 60px;        /* adjust how far from top */
 }
 
 .dashboard {
