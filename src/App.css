@@ -5,7 +5,9 @@
 #6482AD
 #34495e
 */
-
+*, *::before, *::after{
+  box-sizing: border-box;
+}
 html,
 body {
   margin: 0;
@@ -152,7 +154,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   backdrop-filter: blur(6px);
 }
 
-/* nav buttons */
+
 .nav-icon-button {
   background: linear-gradient(135deg, #2a8bff, #4fc3ff);
   border: none;
@@ -169,8 +171,17 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   border-radius: 50%;
   padding: 0;
 
-  transition: background 0.2s ease;
+  /* Smooth transition for background, transform, and box-shadow */
+  transition: background 0.3s ease, 
+              transform 0.3s ease, 
+              box-shadow 0.3s ease;
+
   margin-right: 40px;
+}
+
+.nav-icon-button:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 0px 25px rgba(27, 118, 247, 0.8);
 }
 
 
@@ -185,6 +196,8 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 
 
 
+
+
 /* Brand centered */
 .nav-brand {
   display: flex;
@@ -195,31 +208,11 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   color: #e9f4ff;
 }
 
-.account-button {
-  width: 46px;
-  height: 46px;
-  border-radius: 50%; /* fully round */
-  border: none;
-  background: linear-gradient(135deg, #2a8bff, #4fc3ff); /* same as Add Receipt button */
-  color: #ffffff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.account-button:hover {
-  transform: translateY(-0.5px); /* subtle lift */
-  box-shadow: 0 0px 20px rgba(27, 118, 247, 0.8); /* same shadow effect */
-}
 
 
-.account-circle {
-  font-size: 1.3rem;
-  display: inline-block;
-  transform: translateY(2px);
-}
+
+
+
 /* Top bar */
 
 .dashboard-header {
