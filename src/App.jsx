@@ -9,12 +9,15 @@ import { collection, getDocs } from "firebase/firestore";
 import ScanReceiptForm from "./components/ScanReceiptForm";
 import AddButton from "./components/AddButton";
 import Navbar from "./components/Navbar";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+
 
 function App() {
   const [receipts, setReceipts] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
   const [viewingReceipt, setViewingReceipt] = useState(null);
-
+  const [viewingMenu, setViewingMenu] = useState(null);
+  const [editingReceipt, setEditingReceipt] = useState(null);
   // set to true if you want to bypass auth during testing
   const developerMode = false;
 
@@ -51,6 +54,16 @@ function App() {
     fetchReceipts();
   }, [user]);
 
+
+  useEffect(()=> {
+    function handleClickOutside(e){
+      if(viewingMenu !== null){
+        setViewingMenu(null);
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+  }, [viewingMenu]);
+
   const toggleFormType = () => setShowLogin((prev) => !prev);
 
   const handleLogout = async () => {
@@ -60,6 +73,19 @@ function App() {
   const handleAddReceipt = (receipt) => {
     setReceipts((prev) => [receipt, ...prev]); // newest first
     setShowAddForm(false);
+  };
+
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(database, "users", user.uid, "receipts", id));
+    setReceipts((prev) => prev.filter((r) => r.id !== id));
+  };
+
+  const handleEdit = async (updated)=>{
+    await updateDoc(
+      doc(database, "users", user.uid, "receipts", updated.id), updated
+    );
+
+    setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
   };
 
   // Not logged in: auth screen
@@ -107,13 +133,8 @@ function App() {
                 onAddScan={() => setActiveAddForm("scan")}/>
                 )}
           </div>
-
-          
-
-
         </section>
 
-        {/* add form */}
         {activeAddForm === "manual" && (
           <div className="add-form-panel">
             <AddReceiptForm 
@@ -155,7 +176,35 @@ function App() {
             )}
 
             {receipts.map((receipt) => (
-              <div className="receipt-card" key={receipt.id} onClick={() => setViewingReceipt(receipt)} style={{cursor: "pointer"}}>
+              <div className="receipt-card" key={receipt.id} onClick={() => setViewingReceipt(receipt)} style={{cursor: "pointer", position: "relative"}}>
+                <div className="receipt-menu-btn"
+                onClick={(e)=>{
+                  e.stopPropagation();
+                  setViewingMenu(receipt.id);
+                }}>
+                  ⋮
+                </div>
+
+                {viewingMenu === receipt.id &&(
+                  <div className="receipt-menu" onClick={(e)=> e.stopPropagation()}>
+                    <button className="receipt-menu-item" onClick={()=>{
+                      setEditingReceipt(receipt);
+                      setActiveAddForm("edit");
+                      setViewingReceipt(null);
+                      setViewingMenu(null);
+                    }}>
+                      Edit Receipt
+                    </button>
+
+                    <button className="receipt-menu-item delete" onClick={()=> {
+                      handleDelete(receipt.id);
+                      setViewingMenu(null);
+                    }}>
+                      Delete Receipt
+                    </button>
+                  </div>
+                )}
+                
                 <div className="receipt-card-header">
                   <h2>{receipt.store}</h2>
                 </div>

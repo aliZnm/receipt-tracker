@@ -673,8 +673,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 }
 
 
-.google-button,
-.apple-button {
+.google-button {
   display: inline-flex;            /* keep icon + text aligned */
   align-items: center;             /* vertical center */
   justify-content: center;         /* horizontal center */
@@ -703,18 +702,10 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 }
 .google-button:hover { background-color: #e9e9e9; }
 
-/* Apple specific color treatment — keep original look */
-.apple-button {
-  background-color: #000;
-  color: #fff;
-  border-color: rgba(255,255,255,0.06);
-}
-.apple-button:hover { opacity: 0.95; background-color: rgb(25, 25, 25); }
+
 
 .google-button .social-logos,
-.apple-button .social-logos,
-.google-logo,
-.apple-logo {
+.google-logo{
   width: 30px;
   height: 30px;
   object-fit: contain;
@@ -736,3 +727,93 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   z-index: 1000;
 }
 
+
+
+
+/*Edit & delete*/
+.receipt-menu-btn {
+  position: absolute;
+  top: 10px;
+  left: 92%;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+
+.receipt-menu-btn:hover {
+  background: rgba(56, 184, 207, 0.2);
+}
+
+.receipt-menu {
+  position: absolute;
+  top: 32px;
+  right: 8px;
+
+  background: rgba(3, 18, 45, 0.92);
+  border: 1px solid rgba(120, 155, 230, 0.35);
+  border-radius: 14px;
+
+  width: 135px;
+  padding: 10px 0;
+
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55),
+              0 0 25px rgba(86, 127, 204, 0.35);
+
+  backdrop-filter: blur(6px);
+
+  animation: menuPop 0.18s ease-out;
+
+  z-index: 999;
+}
+
+.receipt-menu-item {
+  width: 100%;
+  padding: 10px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  color: #dce7ff;
+  font-size: 0.9rem;
+
+  transition: background 0.15s ease, padding-left 0.18s ease;
+  border-radius: 8px;
+}
+.receipt-menu-item:hover {
+  background: rgba(100, 130, 173, 0.25);
+  padding-left: 18px;
+}
+
+.receipt-menu-item.delete {
+  color: #ff6b6b;
+}
+
+.receipt-menu-item.delete:hover {
+  background: rgba(255, 90, 90, 0.15);
+}
+
+/* Three-dot button hover fix */
+.receipt-menu-btn:hover {
+  background: rgba(100, 130, 173, 0.25);
+  border-radius: 50%;
+}
+
+/* Opening animation */
+@keyframes menuPop {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
