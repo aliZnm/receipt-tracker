@@ -639,10 +639,10 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 
 .cancel-button {
   position: absolute;
-  top: -165px;
-  left: -60px;
-  width: 65px;
-  height: 65px;
+  top: -158px;
+  left: -47px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   border: none;
   background: linear-gradient(135deg, #2a8bff, #4fc3ff);

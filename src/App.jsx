@@ -83,8 +83,7 @@ function App() {
   const handleEdit = async (updated)=>{
     const {id, ...cleanData} = updated;
     await updateDoc(
-      doc(database, "users", user.uid, "receipts", id),
-      cleanData
+      doc(database, "users", user.uid, "receipts", id),cleanData
     );
 
     setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
