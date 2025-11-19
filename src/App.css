@@ -19,7 +19,7 @@ body {
   background: radial-gradient(circle at top left, #1c3b76 0%, #020b1f 55%, #000814 100%);
 }
 
-/* ---------- AUTH SCREENS ---------- */
+/*Auth page*/
 
 .auth-page {
   min-height: 100vh;
@@ -150,7 +150,7 @@ button {
 .app-root {
   min-height: 100vh;
   display: flex;
-  flex-direction: column; /* so content stacks */
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   padding: 1rem 1rem 2rem 1rem;
@@ -169,7 +169,7 @@ button {
   margin-top: 20px;
 }
 
-/* ---------------- TOP NAVBAR ---------------- */
+/*Navbar*/
 
 .top-navbar {
   width: 100%;
@@ -200,7 +200,6 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   border-radius: 50%;
   padding: 0;
 
-  /* Smooth transition for background, transform, and box-shadow */
   transition: background 0.3s ease, 
               transform 0.3s ease, 
               box-shadow 0.3s ease;
@@ -344,10 +343,9 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   box-shadow: 0 20px 45px rgba(27, 118, 247, 0.8);
 }
 
-/* Add form panel */
 
 .add-form-panel {
-  position: relative; /* ADD THIS */
+  position: relative; 
   margin-bottom: 1.3rem;
   padding: 0.9rem 1rem;
   border-radius: 16px;
@@ -355,7 +353,6 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   border: 1px solid rgba(133, 170, 242, 0.4);
 }
 
-/* ----- Add Receipt Panel Styling ----- */
 
 .receipt-form {
   display: flex;
@@ -674,17 +671,17 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 
 
 .google-button {
-  display: inline-flex;            /* keep icon + text aligned */
-  align-items: center;             /* vertical center */
-  justify-content: center;         /* horizontal center */
-  gap: 10px;                       /* icon/text spacing */
-  width: 75%;                      /* same width as before (adjust if needed) */
-  max-width: 300px;                /* optional cap */
-  height: 44px;                    /* same height for both */
-  font-family: inherit;            /* use page font */
-  font-size: 0.95rem;              /* same scale as other auth text */
+  display: inline-flex;            
+  align-items: center;            
+  justify-content: center;       
+  gap: 10px;                       
+  width: 75%;                      
+  max-width: 300px;                
+  height: 44px;                    
+  font-family: inherit;            
+  font-size: 0.95rem;           
   font-weight: 500;
-  border-radius: 8px;              /* keep pill/rounded look */
+  border-radius: 8px;            
   cursor: pointer;
   border: 1px solid rgba(0,0,0,0.08);
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -852,3 +849,35 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   color: #e8efff;
   padding: 10px;
 }
+
+.category-select {
+  background: rgba(3, 18, 45, 0.85);
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 145, 215, 0.6);
+  font-size: 0.95rem;
+  color: #e8efff; 
+}
+
+.category-select:invalid {
+  color: #7da0d6; 
+}
+
+
+.category-select option[value=""] {
+  color: #7da0d6;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  color: #ffffff; 
+}
+
+input[type="date"]:focus::-webkit-datetime-edit {
+  color: #e8efff; 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(65%) sepia(20%) saturate(300%) hue-rotate(180deg);
+  cursor: pointer;
+}
+

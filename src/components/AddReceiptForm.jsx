@@ -119,9 +119,8 @@ setIsSubmitting(false);
                     onChange={(e) => setAmount(e.target.value)}
                     className="styled-input"/>
                 
-                <label>Category</label>
                 <select value={category} onChange={(e)=> setCategory(e.target.value)} className="category-select">
-                    <option value="">Select Category</option>
+                    <option value="" disabled hidden>Select Category</option>
                     <option value="Grocery">Grocery</option>
                     <option value="Resturants">Resturants</option>
                     <option value="Bills">Bills</option>
