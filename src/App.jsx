@@ -81,8 +81,10 @@ function App() {
   };
 
   const handleEdit = async (updated)=>{
+    const {id, ...cleanData} = updated;
     await updateDoc(
-      doc(database, "users", user.uid, "receipts", updated.id), updated
+      doc(database, "users", user.uid, "receipts", id),
+      cleanData
     );
 
     setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
@@ -152,6 +154,24 @@ function App() {
             onAddReceipt={() => setActiveAddForm(null)} />
           </div>
         )}
+
+        {activeAddForm === "edit" && (
+          <div className="add-form-panel">
+            <AddReceiptForm
+            editingReceipt={editingReceipt}
+            onSaveEdit={(updated)=>{
+              handleEdit(updated);
+              setEditingReceipt(null);
+              setActiveAddForm(null);
+            }}
+            onCancel={() =>{
+              setEditingReceipt(null);
+              setActiveAddForm(null);
+            }}
+            />
+          </div>
+        )}
+
         {activeAddForm === "settings" && (
           <div className="add-form-panel">
             <h2 style={{ marginTop: 0 }}>Account Settings</h2>

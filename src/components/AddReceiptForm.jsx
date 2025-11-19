@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, database, storage } from "../firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-export default function AddReceiptForm({ onAddReceipt, onCancel }) {
+export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, editingReceipt }) {
   const [store, setStore] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(()=>{
+    if(editingReceipt){
+        setStore(editingReceipt.store);
+        setAmount(editingReceipt.amount);
+        setDate(editingReceipt.date);
+        setFile(null);
+    }
+  }, [editingReceipt])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +29,6 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
       return;
     }
 
-   
 
     const user = auth.currentUser;
     if (!user) {
@@ -31,17 +39,14 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
     try {
       setIsSubmitting(true);
 
-      let imageUrl = "";
+      let imageUrl = editingReceipt?.imageUrl || "";
+      
       if(file){
-      // 1) Upload image to Firebase Storage
-    //   const filePath = `receipts/${user.uid}/${Date.now()}-${file.name}`;
-    //   const fileRef = ref(storage, filePath);
-    //   await uploadBytes(fileRef, file);
-    //   const imageUrl = await getDownloadURL(fileRef);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "receipt_upload");
     const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dc77fisjp/image/upload";
+    
     const response = await fetch(CLOUDINARY_URL, {
       method: "POST",
       body: formData,  
@@ -52,38 +57,46 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
     const data = await response.json();
     imageUrl = data.secure_url;
 }
-      // 2) Save Firestore document
-      const newReceipt = {
-        store,
-        amount: parseFloat(amount),
-        date,
-        uid: user.uid,
-        imageUrl,
-        createdAt: new Date().toISOString(),
-      };
 
-      const docRef = await addDoc(
+const  updateData = {
+    store,
+    amount: parseFloat(amount),
+    date,
+    uid: user.uid,
+    imageUrl,
+};
+
+if(editingReceipt){
+    onSaveEdit({...editingReceipt, ...updateData});
+}
+else{
+    const newReceipt = {
+        ...updateData,
+        createdAt: new Date().toISOString(),
+    };
+
+    const docRef = await addDoc(
         collection(database, "users", user.uid, "receipts"),
         newReceipt
-      );
+    );
 
-      const receiptWithId = { id: docRef.id, ...newReceipt };
+    const receiptWithId = {id: docRef.id, ...newReceipt};
+    onAddReceipt(receiptWithId);
+}
 
-      // 3) Update parent state
-      onAddReceipt(receiptWithId);
-
-      // 4) Reset form
-      setStore("");
-      setAmount("");
-      setDate("");
-      setFile(null);
-      setIsSubmitting(false);
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong while saving your receipt.");
-      setIsSubmitting(false);
+setStore("");
+setAmount("");
+setDate("");
+setFile(null);
+setIsSubmitting(false);
     }
-  };
+    catch(err){
+        console.error(err);
+        setError("Something went wrong.");
+        setIsSubmitting(false);
+    }
+};
+  
 
   return (
     <div className="recept-form-container">
@@ -138,7 +151,9 @@ export default function AddReceiptForm({ onAddReceipt, onCancel }) {
                 type="submit"
                 className="submit-button"
                 disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Add"}
+            {isSubmitting 
+            ? (editingReceipt ? "Saving..." : "Adding..." )
+            : (editingReceipt ? "Save" : "Add")}
             </button>
         </form>
     </div>
