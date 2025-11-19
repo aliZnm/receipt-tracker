@@ -227,8 +227,9 @@ function App() {
                 <div className="receipt-card-header">
                   <h2>{receipt.store}</h2>
                 </div>
-                <p className="receipt-date">{receipt.date}</p>
+                <p className="receipt-date" style={{paddingTop: "5px"}}>{receipt.date}</p>
                 <p className="receipt-amount">${Number(receipt.amount).toFixed(2)}</p>
+                <p className="receipt-category" style={{fontSize: "15px"}}>{receipt.category}</p>
                 <p className="receipt-subtext">
                   Tap to view receipt
                 </p>

@@ -817,3 +817,38 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
     transform: translateY(0) scale(1);
   }
 }
+
+
+
+
+.category-select {
+  flex: 1;
+  min-width: 150px;
+
+  background: rgba(3, 18, 45, 0.85);
+  color: #e8efff;
+
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 145, 215, 0.6);
+
+  font-size: 0.95rem;
+  outline: none;
+
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.category-select:hover {
+  background: rgba(6, 26, 60, 0.88);
+}
+
+.category-select:focus {
+  border-color: #5ba8ff;
+  background: rgba(6, 26, 60, 0.95);
+}
+
+.category-select option {
+  background: #071a34;
+  color: #e8efff;
+  padding: 10px;
+}

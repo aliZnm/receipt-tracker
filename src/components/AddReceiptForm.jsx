@@ -10,7 +10,7 @@ export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, edit
   const [file, setFile] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
-
+  const [category, setCategory] = useState(editingReceipt?.category || "");
   useEffect(()=>{
     if(editingReceipt){
         setStore(editingReceipt.store);
@@ -62,6 +62,7 @@ const  updateData = {
     store,
     amount: parseFloat(amount),
     date,
+    category,
     uid: user.uid,
     imageUrl,
 };
@@ -117,6 +118,17 @@ setIsSubmitting(false);
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     className="styled-input"/>
+                
+                <label>Category</label>
+                <select value={category} onChange={(e)=> setCategory(e.target.value)} className="category-select">
+                    <option value="">Select Category</option>
+                    <option value="Grocery">Grocery</option>
+                    <option value="Resturants">Resturants</option>
+                    <option value="Bills">Bills</option>
+                    <option value="Gas">Gas</option>
+                    <option value="Other">Other</option>
+                </select>
+                
                 <input
                     type="date"
                     value={date}
