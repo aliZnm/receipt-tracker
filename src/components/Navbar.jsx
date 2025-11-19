@@ -19,13 +19,13 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
         <span className="brand-name">ReceiptTracker</span>
       </div>
 
-      {/* RIGHT — Account Icon */}
+      
       <div className="account-icon"
       onClick={onOpenSettings} 
       role="button"
       tabIndex={0}
       aria-label="Open Setting">
-        <img src="/src/assets/account-logo.png" alt="Account" className="account-img" />
+        <img src="/src/assets/account-logo2.png" alt="Account" className="account-img" />
       </div>
 
     </header>
