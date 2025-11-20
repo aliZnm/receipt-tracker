@@ -19,7 +19,8 @@ function App() {
   const [viewingMenu, setViewingMenu] = useState(null);
   const [editingReceipt, setEditingReceipt] = useState(null);
   const [showAccountPanel, setShowAccountPanel] = useState(false);
-
+  const [activeSetting, setActiveSetting] = useState(null);
+  const [activePage, setActivePage] = useState(null);
   // set to true if you want to bypass auth during testing
   const developerMode = false;
 
@@ -114,12 +115,30 @@ function App() {
           />
 
     <div className="app-root">
-      <div className="dashboard">
-        {/* top bar */}
+      {activePage === "accountInfo" ? (
+        <div className="account-info-page">
+          <h1>Account Info</h1>
+          <div className="info-row">
+            <span className="label">Name:</span>
+            <span>{user.displayName || "No name set"}</span>
+          </div>
+
+          <div className="info-row">
+            <span className="label">Email:</span>
+            <span className="value">{user.email}</span>
+          </div>
+
+          <button className="back-button" onClick={() => setActivePage(null)}>
+            Back
+          </button>
+        </div>
+      ) : (
+        <div className="dashboard">
+      
         
 
 
-        {/* title row */}
+       
         <section className="dashboard-main">
           <div className="dashboard-text">
             <h1>Your Receipts</h1>
@@ -276,7 +295,15 @@ function App() {
           <div className="account-panel-overlay" onClick={()=> setShowAccountPanel(false)}>
             <div className="account-panel" onClick={(e)=> e.stopPropagation()}>
               <h2>Account Settings</h2>
-              <div className="panel-item">Account Info</div>
+              
+              
+              <div className="panel-item"
+              onClick={()=> {
+                setActivePage("accountInfo");
+                setShowAccountPanel(false);}}>
+                Account Info
+                </div>
+
               <div className="panel-item">Password Recovery</div>
               <div className="panel-item danger-item">Delete Account</div>
 
@@ -287,6 +314,8 @@ function App() {
           </div> 
         )}
       </div>
+      
+      )}
     </div>
   </>
   );
