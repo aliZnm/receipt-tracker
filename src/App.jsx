@@ -10,7 +10,7 @@ import ScanReceiptForm from "./components/ScanReceiptForm";
 import AddButton from "./components/AddButton";
 import Navbar from "./components/Navbar";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
-
+import './settingPanel.css';
 
 function App() {
   const [receipts, setReceipts] = useState([]);
@@ -18,6 +18,8 @@ function App() {
   const [viewingReceipt, setViewingReceipt] = useState(null);
   const [viewingMenu, setViewingMenu] = useState(null);
   const [editingReceipt, setEditingReceipt] = useState(null);
+  const [showAccountPanel, setShowAccountPanel] = useState(false);
+
   // set to true if you want to bypass auth during testing
   const developerMode = false;
 
@@ -107,7 +109,7 @@ function App() {
     <>
     <Navbar 
             onLogout={handleLogout}
-            onOpenSettings={() => setActiveAddForm("settings")}
+            onOpenSettings={() => setShowAccountPanel(true)}
             userEmail={user?.email}
           />
 
@@ -268,6 +270,21 @@ function App() {
                   <img src={viewingReceipt.imageUrl} alt="Receipt" style={{ maxWidth: "80vw", maxHeight: "80vh", display: "block" }}/>
             </div>
           </div>
+        )}
+
+        {showAccountPanel && (
+          <div className="account-panel-overlay" onClick={()=> setShowAccountPanel(false)}>
+            <div className="account-panel" onClick={(e)=> e.stopPropagation()}>
+              <h2>Account Settings</h2>
+              <div className="panel-item">Account Info</div>
+              <div className="panel-item">Password Recovery</div>
+              <div className="panel-item danger-item">Delete Account</div>
+
+              <button className="panel-close" onClick={() => setShowAccountPanel(false)}>
+                <img className="arrow-img" src="/src/assets/arrow-icon.png" alt="" style={{width: "25px"}}/>
+              </button>
+            </div>
+          </div> 
         )}
       </div>
     </div>

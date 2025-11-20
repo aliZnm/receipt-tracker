@@ -11,6 +11,8 @@ export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, edit
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [category, setCategory] = useState(editingReceipt?.category || "");
+
+
   useEffect(()=>{
     if(editingReceipt){
         setStore(editingReceipt.store);
