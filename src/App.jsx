@@ -171,7 +171,9 @@ function App() {
         {activeAddForm === "scan" && (
           <div className="add-form-panel">
             <ScanReceiptForm
-            onAddReceipt={() => setActiveAddForm(null)} />
+              onAddReceipt={handleAddReceipt}      
+              onCancel={() => setActiveAddForm(null)} 
+            />
           </div>
         )}
 
