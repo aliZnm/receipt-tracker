@@ -10,7 +10,7 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
         className="logout-button"
         onClick={onLogout}
       >
-        ⟵ Logout
+         Logout
       </button>
 
       {/* CENTER — Brand */}

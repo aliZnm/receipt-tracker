@@ -183,6 +183,23 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   backdrop-filter: blur(6px);
 }
 
+.top-navbar button {
+  font-size: 1rem;
+  padding: 8px 12px;
+}
+@media (max-width: 600px) {
+  .top-navbar button{
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 600px){
+  .account-icon img {
+    font-size: 0.85rem;
+    padding: 4px 1px;
+  }
+}
 
 .nav-icon-button {
   background: linear-gradient(135deg, #2a8bff, #4fc3ff);
