@@ -23,6 +23,9 @@ function App() {
   const [activeSetting, setActiveSetting] = useState(null);
   const [activePage, setActivePage] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [filterCategory, setFilterCategory] = useState("All");
+  const [selectMode, setSelectMode] = useState(false);
+  const [selectedReceipts, setSelectedReceipts] = useState([]);
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -70,6 +73,11 @@ function App() {
     }
     document.addEventListener("click", handleClickOutside);
   }, [viewingMenu]);
+
+  const filteredReceipts = receipts.filter((r) =>{
+    if(filterCategory === "All") return true;
+    return r.category === filterCategory;
+  });
 
   const toggleFormType = () => setShowLogin((prev) => !prev);
 
@@ -259,8 +267,30 @@ function App() {
             </button>
           </div>
         )}
-        {/* cards */}
+
+      
+
+        {/*receipts cards*/}
         <section className="receipts-section">
+          <div className="receipt-tools">
+            <select 
+            value={filterCategory} 
+            onChange={(e)=> setFilterCategory(e.target.value)} className="filter-dropdown">
+              <option value="All">All Categories</option>
+              {Array.from(new Set(receipts.map((r) =>  r.category))).map((cat) =>(
+                
+                <option value={cat} key={cat}>{cat}</option>
+              ))}
+            </select>
+
+            <button className="select-toggle-button"
+            onClick={()=> {
+              setSelectMode((prev) => !prev);
+              setSelectedReceipts([]);
+            }}>
+              {selectMode ? "Cancel Selection" : "Select Receipts"}
+            </button>
+          </div>
           <div className="receipt-grid">
             {receipts.length === 0 && (
               <p className="empty-text">
@@ -268,7 +298,7 @@ function App() {
               </p>
             )}
 
-            {receipts.map((receipt) => (
+            {filteredReceipts.map((receipt) => (
               <div className="receipt-card" key={receipt.id} onClick={() => setViewingReceipt(receipt)} style={{cursor: "pointer", position: "relative"}}>
                 <div className="receipt-menu-btn"
                 onClick={(e)=>{

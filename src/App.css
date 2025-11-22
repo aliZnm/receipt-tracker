@@ -1061,3 +1061,37 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+
+.filter-dropdown {
+  padding: 0.5rem 1rem;
+  font-size: 13px;
+  border: 1px solid rgba(86, 127, 204, 0.65); 
+  border-radius: 8px;
+  background-color: rgba(5, 33, 76, 0.95); 
+  color: #9cb4f0; 
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-dropdown:hover {
+  border-color: #6482ad;
+}
+
+.filter-dropdown:focus {
+  border-color: #7fa1c3;
+  box-shadow: 0 0 5px rgba(100, 130, 173, 0.5);
+}
+
+.filter-dropdown::-ms-expand {
+  display: none;
+}
+
+.filter-dropdown {
+  appearance: none;
+  background-image: url("/src/assets/down-arrow.png"); 
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 1rem;
+  padding-right: 2rem; 
+}
