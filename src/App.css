@@ -775,13 +775,18 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 /*Edit & delete*/
 .receipt-menu-btn {
   position: absolute;
-  top: 10px;
-  left: 92%;
+  top: 15px;
+  left: 87%;
   font-weight: bold;
   width: 20px;
   height: 20px;
   text-align: center;
   border-radius: 50%;
+}
+@media(max-width: 600px){
+  .receipt-menu-btn{
+    left: 91%;
+  }
 }
 
 
