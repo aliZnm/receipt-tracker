@@ -11,6 +11,7 @@ import AddButton from "./components/AddButton";
 import Navbar from "./components/Navbar";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import './settingPanel.css';
+import PasswordRecovery from "./components/PasswordRecovery";
 
 function App() {
   const [receipts, setReceipts] = useState([]);
@@ -29,6 +30,7 @@ function App() {
   );
   const [showLogin, setShowLogin] = useState(false);
   const [activeAddForm, setActiveAddForm] = useState(null);
+  
   useEffect(() => {
     if (!developerMode) {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -105,6 +107,35 @@ function App() {
     );
   }
 
+  if(activePage === "passwordRecovery"){
+    return <PasswordRecovery onBack={()=> setActivePage(null)} />;
+  }
+
+  if(activePage === "accountInfo"){
+    return(
+      <>
+      <Navbar 
+          onLogout={handleLogout}
+          userEmail={user?.email}
+        />
+        <div className="account-info-page">
+          <h1>Account Info</h1>
+          <div className="info-row">
+            <span className="label">Name:</span>
+            <span>{user.displayName || "No name set"}</span>
+          </div>
+          <div className="info-row">
+            <span className="label">Email:</span>
+            <span>{user.email}</span>
+          </div>
+          <button className="back-button" onClick={() => setActivePage(null)}>
+            Back
+          </button>
+        </div>
+      </>
+    );
+  }
+
   // Logged in: dashboard
   return (
     <>
@@ -115,36 +146,14 @@ function App() {
           />
 
     <div className="app-root">
-      {activePage === "accountInfo" ? (
-        <div className="account-info-page">
-          <h1>Account Info</h1>
-          <div className="info-row">
-            <span className="label">Name:</span>
-            <span>{user.displayName || "No name set"}</span>
-          </div>
-
-          <div className="info-row">
-            <span className="label">Email:</span>
-            <span className="value">{user.email}</span>
-          </div>
-
-          <button className="back-button" onClick={() => setActivePage(null)}>
-            Back
-          </button>
-        </div>
-      ) : (
-        <div className="dashboard">
       
-        
-
-
-       
-        <section className="dashboard-main">
-          <div className="dashboard-text">
-            <h1>Your Receipts</h1>
-            <p>
+        <div className="dashboard">
+          <section className="dashboard-main">
+           <div className="dashboard-text">
+             <h1>Your Receipts</h1>
+             <p>
               Track, organize, and search your purchase history in one place.
-            </p>
+              </p>
           </div>
           
           <div className="dashboard-actions">
@@ -293,7 +302,7 @@ function App() {
           </div>
         )}
 
-        {showAccountPanel && (
+        {showAccountPanel && !activePage &&(
           <div className="account-panel-overlay" onClick={()=> setShowAccountPanel(false)}>
             <div className="account-panel" onClick={(e)=> e.stopPropagation()}>
               <h2>Account Settings</h2>
@@ -306,7 +315,13 @@ function App() {
                 Account Info
                 </div>
 
-              <div className="panel-item">Password Recovery</div>
+              <div className="panel-item"
+                onClick={()=>{
+                  setActivePage("passwordRecovery");
+                  setShowAccountPanel(false);
+                }}>
+                  Password Recovery</div>
+              
               <div className="panel-item danger-item">Delete Account</div>
 
               <button className="panel-close" onClick={() => setShowAccountPanel(false)}>
@@ -317,7 +332,7 @@ function App() {
         )}
       </div>
       
-      )}
+      
     </div>
   </>
   );
