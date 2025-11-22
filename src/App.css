@@ -881,3 +881,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+.edit-button {
+  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  color: #ffffff;
+  border: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(27, 118, 247, 0.5);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  margin-left: 5px;
+}
+
+.edit-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(27, 118, 247, 0.6);
+}
