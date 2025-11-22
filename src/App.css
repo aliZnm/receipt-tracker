@@ -927,22 +927,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .edit-button {
-  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  background:#041e3b;
   color: #ffffff;
   border: none;
   padding: 0.25rem 0.55rem;
-  border-radius: 2px;
-  font-size: 0.8rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(27, 118, 247, 0.5);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   margin-left: 10px;
+  border: 0.5px solid #294e7b;
+  
 }
 
 .edit-button:hover {
-  transform: translateY(-0.2px);
-  box-shadow: 0 8px 20px rgba(27, 118, 247, 0.6);
+  transition: ease-in-out 0.1s;
+  border: 0.5px solid #6483a8;
 }
 
 

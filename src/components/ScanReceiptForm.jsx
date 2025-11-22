@@ -114,7 +114,7 @@ export default function ScanReceiptForm({ onAddReceipt, onCancel }) {
           </p>
 
           <p className="scanned-data">
-            <strong>Total:</strong>{" "}
+            <strong>Total: $</strong>{" "}
             {renderField("Total", total, setTotal, "number")}
           </p>
 
