@@ -103,17 +103,17 @@ export default function ScanReceiptForm({ onAddReceipt, onCancel }) {
         <div style={{ marginTop: "1rem" }}>
           <h3>Scanned Receipt Data</h3>
 
-          <p>
+          <p className="scanned-data">
             <strong>Store:</strong>{" "}
             {renderField("Store", store, setStore)}
           </p>
 
-          <p>
+          <p className="scanned-data">
             <strong>Date:</strong>{" "}
             {renderField("Date", date, setDate, "text")}
           </p>
 
-          <p>
+          <p className="scanned-data">
             <strong>Total:</strong>{" "}
             {renderField("Total", total, setTotal, "number")}
           </p>

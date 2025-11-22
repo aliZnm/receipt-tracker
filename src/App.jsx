@@ -22,7 +22,7 @@ function App() {
   const [activeSetting, setActiveSetting] = useState(null);
   const [activePage, setActivePage] = useState(null);
   // set to true if you want to bypass auth during testing
-  const developerMode = false;
+  const developerMode = true;
 
   const [user, setUser] = useState(
     developerMode ? { email: "dev@aaaa.com", uid: "dev" } : null

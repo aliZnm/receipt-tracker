@@ -91,7 +91,7 @@ export default function ReceiptScanner({ onScanComplete }) {
 
   return (
     <div className="receipt-scanner">
-      <label className="primary-button" style={{ cursor: "pointer" }}>
+      <label className="primary-button choose-receipt" style={{ cursor: "pointer" }}>
         Choose Receipt
         <input
           type="file"
