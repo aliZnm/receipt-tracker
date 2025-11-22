@@ -205,3 +205,30 @@
   transform: translateY(-0.5px);
   box-shadow: 0 12px 30px rgba(27, 118, 247, 0.6);
 }
+
+
+.back-button2 {
+  background: none;  
+  width: 60px;   
+  align-self: center;
+  border: none;
+  text-decoration: underline;
+  color: rgba(141, 189, 255, 0.6);
+  font-size: 15px;
+  cursor: pointer;
+}
+.back-button2:hover{
+    color: rgba(202, 224, 255, 0.6);
+    transition: ease-in-out 0.1s;
+}
+
+.email-input{
+    border: 1px solid rgba(110, 145, 215, 0.6);
+    background: rgba(3, 18, 45, 0.85);
+    border-radius: 5px;
+    color: white;
+}
+.email-input::placeholder{
+    color: #7da0d6;
+}
+

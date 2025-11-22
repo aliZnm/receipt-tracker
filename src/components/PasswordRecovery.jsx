@@ -14,9 +14,10 @@ export default function PasswordRecovery({onBack}){
 
         try {
             await sendPasswordResetEmail(auth, email);
-            setMessage("Password reset email sent! Check your inbox.");
+            setMessage("Email sent! check spam folder");
             setEmail("");
-            } catch (err) {
+            } 
+            catch (err) {
                 setError(err.message);
                 console.error(err);
             }
@@ -25,24 +26,33 @@ export default function PasswordRecovery({onBack}){
 
 
         return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h2>Password Recovery</h2>
-        <form onSubmit={handleSubmit}>
+    <div className="account-info-page" style={{ maxWidth: "400px", margin: "2rem auto" }}>
+      <h1>Password Recovery</h1>
+      
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div className="info-row" style={{ flexDirection: "column", alignItems: "flex-start" }}>
+          <label htmlFor="email" style={{marginBottom: "10px"}}>Email:</label>
           <input
+          className="email-input"
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            style={{ padding: "8px", width: "100%", fontSize: "16px" }}
           />
-          {message && <p className="success-text">{message}</p>}
-          {error && <p className="error-text">{error}</p>}
-          <button type="submit">Send Reset Email</button>
-        </form>
-        <button className="login-option-button" onClick={onBack}>
-          Back
+        </div>
+
+        {message && <p className="success-text">{message}</p>}
+        {error && <p className="error-text">{error}</p>}
+
+        <button type="submit" className="back-button" style={{ marginTop: "10px" }}>
+          Send Reset Email
         </button>
-      </div>
+      </form>
+
+      <button className="back-button2" onClick={onBack} style={{ marginTop: "20px" }}>
+        Back
+      </button>
     </div>
   );
 }
