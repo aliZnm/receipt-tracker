@@ -52,6 +52,7 @@ export default function AddButton({ buttonLabel = "+", onAddManual, onAddScan })
             transform: "translateY(-50%)"
           }}
         >
+          
           <button
             className="option-button top animate-pop open"
             onClick={() => { onAddManual(); setOpen(false); }}

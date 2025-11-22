@@ -600,7 +600,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   cursor: pointer;
   background: linear-gradient(135deg, #2a8bff, #4fc3ff);
   box-shadow: 0 10px 25px rgba(27, 118, 247, 0.45);
-  margin: 8px 0; /* small margin so they are close */
+  margin: 8px 0; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1059,3 +1059,5 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-color: #b30000;    
   transform: translateY(-0.4px);
 }
+
+
