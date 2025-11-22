@@ -22,6 +22,8 @@ function App() {
   const [showAccountPanel, setShowAccountPanel] = useState(false);
   const [activeSetting, setActiveSetting] = useState(null);
   const [activePage, setActivePage] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
   // set to true if you want to bypass auth during testing
   const developerMode = false;
 
@@ -94,6 +96,29 @@ function App() {
     setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
   };
 
+
+
+  const handleDeleteAccount = async () =>{
+    if(!user) return;
+
+    try{
+      const snapshot = await getDocs(collection(database, "users", user.uid, "receipts"));
+      for(const docSnap of snapshot.docs){
+        await deleteDoc(doc(database, "users", user.uid, "receipts", docSnap.id));
+      }
+
+      await user.delete();
+      setUser(null);
+      setReceipts([]);
+      alert("Your account has been deleted.");
+    }
+
+    catch (err){
+      console.error("Error deleting account: ", err);
+      alert("Failed to delete account. Login and try again.");
+    }
+  };
+
   // Not logged in: auth screen
   if (!user) {
     return (
@@ -144,6 +169,23 @@ function App() {
             onOpenSettings={() => setShowAccountPanel(true)}
             userEmail={user?.email}
           />
+
+{showDeleteConfirm && (
+          <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
+            <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+              <h3>Confirm Account Deletion</h3>
+              <p>This will permanently delete your account and all receipts. Are you sure?</p>
+              <div className="delete-confirm-buttons">
+                <button className="delete-cancel-button" onClick={()=> setShowDeleteConfirm(false)}>
+                  Cancel
+                </button>
+                <button className="confirm-button" onClick={handleDeleteAccount}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
     <div className="app-root">
       
@@ -322,7 +364,8 @@ function App() {
                 }}>
                   Password Recovery</div>
               
-              <div className="panel-item danger-item">Delete Account</div>
+              <div className="panel-item danger-item"
+              onClick={() => setShowDeleteConfirm(true)}>Delete Account</div>
 
               <button className="panel-close" onClick={() => setShowAccountPanel(false)}>
                 <img className="arrow-img" src="/src/assets/arrow-icon.png" alt="" style={{width: "25px"}}/>
@@ -330,6 +373,8 @@ function App() {
             </div>
           </div> 
         )}
+
+        
       </div>
       
       
