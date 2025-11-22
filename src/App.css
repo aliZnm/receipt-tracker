@@ -327,9 +327,10 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 }
 
 .dashboard-text h1 {
-  margin: 0 0 0.35rem 0;
+  margin: 0 0 1.5rem 0;
   font-size: 2.1rem;
 }
+
 
 .dashboard-text p {
   margin: 0;
@@ -411,6 +412,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   text-align: center;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
+
 }
 
 .upload-box:hover {
@@ -549,8 +551,11 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 
 .empty-text {
   margin-top: 0.6rem;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: #90a9df;
+  background-color: rgba(0,0,0,0.3);
+  padding: 8px;
+  border-radius: 5px;e4rfdew
 }
 
 
