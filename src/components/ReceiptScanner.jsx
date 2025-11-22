@@ -1,10 +1,8 @@
 import { useState } from "react";
 import Tesseract from "tesseract.js";
-import preprocessImage from "./preprocessImage"; // your preprocessing function
+import preprocessImage from "./preprocessImage"; 
 
-// -------------------- Helper Functions --------------------
-
-// Normalize OCR text for common misreads
+// Normalize 
 function normalizeOCRText(text) {
   return text
     .replace(/O/g, "0")
@@ -12,7 +10,7 @@ function normalizeOCRText(text) {
     .replace(/I/g, "1")
     .replace(/S/g, "5")
     .replace(/,/g, ".")
-    .replace(/[^0-9A-Za-z./\n\-: ]/g, " "); // keep letters, numbers, . / - :
+    .replace(/[^0-9A-Za-z./\n\-: ]/g, " "); 
 }
 
 // Extract total: largest number in the receipt
@@ -24,14 +22,16 @@ function extractTotalFromText(text = "") {
   return Math.max(...numbers).toFixed(2);
 }
 
-// Extract date: fixes common OCR misreads
+// Extract date: format MM/DD/YYYY
 function extractDateFromText(text = "") {
-  // Fix OCR faint or broken separators
+  // Normalize
   let normalized = text
-    .replace(/[:!|]/g, "/")     // common slash misreads
-    .replace(/\\/g, "/")         // misread slash
-    .replace(/\s+/g, "")         // remove spaces between digits
-    .replace(/(\d)[^\d](\d)/g, "$1/$2"); // fix missing separators
+    .replace(/[:!|]/g, "/")
+    .replace(/\,/g, "/")   
+    .replace(/\:/g, "/")            
+    .replace(/\\/g, "/")         
+    .replace(/\s+/g, "")         
+    .replace(/(\d)[^\d](\d)/g, "$1/$2"); 
 
   const dateRegex = /(\d{1,2}\/\d{1,2}\/\d{2,4}|\d{4}\/\d{1,2}\/\d{1,2})/;
 
@@ -46,7 +46,6 @@ function extractStoreFromText(text = "") {
   return storeLine || "";
 }
 
-// -------------------- Component --------------------
 export default function ReceiptScanner({ onScanComplete }) {
   const [image, setImage] = useState(null);
   const [status, setStatus] = useState("");

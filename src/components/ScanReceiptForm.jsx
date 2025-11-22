@@ -11,7 +11,6 @@ export default function ScanReceiptForm({ onAddReceipt, onCancel }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
 
-  // Track which field is in edit mode
   const [editingField, setEditingField] = useState(null);
 
   const handleScanComplete = ({ rawText, total, date, store }) => {
