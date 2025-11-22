@@ -110,7 +110,7 @@ export default function ScanReceiptForm({ onAddReceipt, onCancel }) {
 
           <p className="scanned-data">
             <strong>Date:</strong>{" "}
-            {renderField("Date", date, setDate, "text")}
+            {renderField("Date", date, setDate, "date")}
           </p>
 
           <p className="scanned-data">
