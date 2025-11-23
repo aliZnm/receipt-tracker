@@ -1170,3 +1170,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   max-width: 100%;
   margin: 0 auto;
 }
+
+
+
+.filter-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #9cb4f0;
+  background: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.filter-toggle-button:hover {
+  background-color: rgba(110, 145, 215, 0.2);
+  
+}
+
+.filter-panel {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+

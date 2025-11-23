@@ -30,7 +30,7 @@ function App() {
   const [selectedReceipts, setSelectedReceipts] = useState([]);
   const [filterPrice, setFilterPrice] = useState("All");
   const [customPrice, setCustomPrice] = useState("");
-
+  const [showFilters, setShowFilters] = useState(false);
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -287,7 +287,15 @@ function App() {
         {/*receipts cards*/}
         <section className="receipts-section">
           <div className="receipt-tools">
-            <select 
+            
+            <button className="filter-toggle-button "
+            onClick={()=>setShowFilters(prev => !prev)}>
+              <img  src="/src/assets/filter-icon.png" style={{width: "20px"}}/>
+            </button>
+
+            {showFilters &&(
+              <div className="filter-panel">
+                <select 
             value={filterCategory} 
             onChange={(e)=> setFilterCategory(e.target.value)} className="filter-dropdown">
               <option value="All">All Categories</option>
@@ -308,6 +316,11 @@ function App() {
               <option value="100">Above $100</option>
               <option value="Other">Other Amount</option>
             </select>
+              </div>
+            )}
+            
+            
+            
 
             {filterPrice === "Other" && (
               <CurrencyInput 
@@ -315,7 +328,7 @@ function App() {
               onChange={setCustomPrice}
               className="filter-input"/>
             )}
-            <button className="select-toggle-button"
+            <button className="select-toggle-button toggle-button"
             onClick={()=> {
               setSelectMode((prev) => !prev);
               setSelectedReceipts([]);
