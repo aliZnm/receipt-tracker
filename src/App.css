@@ -7,9 +7,11 @@
 */
 *, *::before, *::after{
   box-sizing: border-box;
+  max-width: 100%;
 } 
 html,
 body {
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -799,6 +801,14 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   }
 }
 
+@media (max-width: 480px) {
+  .add-options-panel {
+    left: 0 !important;
+    right: 0;
+    margin: auto;
+    justify-content: center;
+  }
+}
 
 .receipt-menu-btn:hover {
   background: rgba(56, 184, 207, 0.2);
@@ -1152,4 +1162,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .filter-input::placeholder{
   color: #7da0d6;
+}
+
+.receipts-section, 
+.receipts-container, 
+.whatever-your-main-card-is {
+  max-width: 100%;
+  margin: 0 auto;
 }
