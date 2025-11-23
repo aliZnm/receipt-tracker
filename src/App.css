@@ -7,7 +7,7 @@
 */
 *, *::before, *::after{
   box-sizing: border-box;
-}
+} 
 html,
 body {
   margin: 0;
@@ -17,6 +17,7 @@ body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   background: radial-gradient(circle at top left, #1c3b76 0%, #020b1f 55%, #000814 100%);
+ 
 }
 
 /*Auth page*/
@@ -1089,4 +1090,45 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-position: right 0.7rem center;
   background-size: 1rem;
   padding-right: 2rem; 
+}
+
+
+
+
+
+.select-toggle-button{
+  background-color:#041e3b;
+  border: none;
+  margin-left: 15px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.receipt-card.selected {
+  border: 2px solid #ff5050;
+  box-shadow: 0 0 12px rgba(255, 80, 80, 0.2);
+  transform: scale(0.98);
+}
+
+.bulk-delete-button {
+  border: 1px solid #ff5050;
+  background-color:#041e3b;
+  color: #ff5050;
+  padding: 0.2rem 0.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.bulk-delete-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.bulk-delete-button:hover:not(:disabled) {
+  background: #e60000;
+  transform: translateY(-1px);
 }

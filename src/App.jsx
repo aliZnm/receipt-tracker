@@ -288,8 +288,20 @@ function App() {
               setSelectMode((prev) => !prev);
               setSelectedReceipts([]);
             }}>
-              {selectMode ? "Cancel Selection" : "Select Receipts"}
+              {selectMode ? "Cancel" : <img src="/src/assets/select-icon.png" style={{width: "20px"}}></img>}
             </button>
+            {selectMode && (
+              <button 
+              className="bulk-delete-button"
+              disabled={selectedReceipts.length === 0}
+              onClick={()=>{
+                selectedReceipts.forEach((id) => handleDelete(id));
+                setSelectedReceipts([]);
+                setSelectMode(false);
+              }}>
+                Delete ({selectedReceipts.length})
+              </button>
+            )}
           </div>
           <div className="receipt-grid">
             {receipts.length === 0 && (
@@ -299,7 +311,24 @@ function App() {
             )}
 
             {filteredReceipts.map((receipt) => (
-              <div className="receipt-card" key={receipt.id} onClick={() => setViewingReceipt(receipt)} style={{cursor: "pointer", position: "relative"}}>
+              <div className={`receipt-card ${selectMode && selectedReceipts.includes(receipt.id) ? "selected" : ""}`} 
+              key={receipt.id} 
+              onClick={() => {
+                if(selectMode){
+                  if(selectedReceipts.includes(receipt.id)){
+                    setSelectedReceipts((prev) =>
+                    prev.filter((id) => id !== receipt.id));
+                  } 
+                  else{
+                    setSelectedReceipts((prev) => [...prev, receipt.id]);
+                  }
+                  return;
+                }
+              setViewingReceipt(receipt);
+              }}
+              
+              style={{cursor: "pointer", position: "relative"}}
+              >
                 <div className="receipt-menu-btn"
                 onClick={(e)=>{
                   e.stopPropagation();
