@@ -468,7 +468,7 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   color: #e8efff;
   padding: 0.7rem 0.9rem;
   border-radius: 10px;
-  border: 1px solid rgba(110, 145, 215, 0.6);
+  border: 1px solid rgba(110, 145, 215, 0.6); 
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s ease, background 0.2s ease;
@@ -1090,6 +1090,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-position: right 0.7rem center;
   background-size: 1rem;
   padding-right: 2rem; 
+  margin-right: 7px;
 }
 
 
@@ -1131,4 +1132,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .bulk-delete-button:hover:not(:disabled) {
   background: #e60000;
   transform: translateY(-1px);
+}
+
+
+.filter-input{
+  width: 120px;
+  height: 32px;
+  padding-left: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(110, 145, 215, 0.6); 
+  background: rgba(3, 18, 45, 0.85); 
+  color: white;
+}
+.filter-input::placeholder{
+  color: #7da0d6;
 }

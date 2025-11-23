@@ -26,6 +26,9 @@ function App() {
   const [filterCategory, setFilterCategory] = useState("All");
   const [selectMode, setSelectMode] = useState(false);
   const [selectedReceipts, setSelectedReceipts] = useState([]);
+  const [filterPrice, setFilterPrice] = useState("All");
+  const [customPrice, setCustomPrice] = useState("");
+
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -75,8 +78,18 @@ function App() {
   }, [viewingMenu]);
 
   const filteredReceipts = receipts.filter((r) =>{
-    if(filterCategory === "All") return true;
-    return r.category === filterCategory;
+    const categoryPass = 
+    filterCategory === "All" ? true : r.category === filterCategory;
+
+    let pricePass = true;
+    if(filterPrice === "20") pricePass = r.amount >= 20;
+    else if(filterPrice === "50") pricePass = r.amount >= 50;
+    else if(filterPrice === "100") pricePass = r.amount >= 100;
+    else if(filterPrice === "Other" && customPrice)
+      pricePass = r.amount >= Number(customPrice);
+    
+    return categoryPass && pricePass;
+
   });
 
   const toggleFormType = () => setShowLogin((prev) => !prev);
@@ -268,8 +281,7 @@ function App() {
           </div>
         )}
 
-      
-
+        
         {/*receipts cards*/}
         <section className="receipts-section">
           <div className="receipt-tools">
@@ -283,6 +295,26 @@ function App() {
               ))}
             </select>
 
+            <select value={filterPrice}
+            onChange={(e) =>{
+              setFilterPrice(e.target.value);
+              if(e.target.value !== "Other") setCustomPrice("");
+            }} className="filter-dropdown">
+              <option value="All">All Prices</option>
+              <option value="20">Above $20</option>
+              <option value="50">Above $50</option>
+              <option value="100">Above $100</option>
+              <option value="Other">Other Amount</option>
+            </select>
+
+            {filterPrice === "Other" && (
+              <input type="number"
+              placeholder="Enter amount"
+              value={customPrice}
+              onChange={(e)=>setCustomPrice(e.target.value)}
+              className="filter-input"
+             />
+            )}
             <button className="select-toggle-button"
             onClick={()=> {
               setSelectMode((prev) => !prev);
