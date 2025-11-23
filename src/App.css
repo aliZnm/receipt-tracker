@@ -846,13 +846,11 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   background: rgba(255, 90, 90, 0.15);
 }
 
-/* Three-dot button hover fix */
 .receipt-menu-btn:hover {
   background: rgba(100, 130, 173, 0.25);
   border-radius: 50%;
 }
 
-/* Opening animation */
 @keyframes menuPop {
   0% {
     opacity: 0;
@@ -874,17 +872,13 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 .category-select {
   flex: 1;
   min-width: 150px;
-
   background: rgba(3, 18, 45, 0.85);
   color: #e8efff;
-
   padding: 0.7rem 0.9rem;
   border-radius: 10px;
   border: 1px solid rgba(110, 145, 215, 0.6);
-
   font-size: 0.95rem;
   outline: none;
-
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -1063,7 +1057,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .filter-dropdown {
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   font-size: 13px;
   border: 1px solid rgba(86, 127, 204, 0.65); 
   border-radius: 8px;
@@ -1072,6 +1066,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-bottom: 15px;
 }
 
 .filter-dropdown:hover {
