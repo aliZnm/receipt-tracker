@@ -12,6 +12,8 @@ import Navbar from "./components/Navbar";
 import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import './settingPanel.css';
 import PasswordRecovery from "./components/PasswordRecovery";
+import CurrencyInput from "./components/CurrencyInput";
+
 
 function App() {
   const [receipts, setReceipts] = useState([]);
@@ -86,7 +88,7 @@ function App() {
     else if(filterPrice === "50") pricePass = r.amount >= 50;
     else if(filterPrice === "100") pricePass = r.amount >= 100;
     else if(filterPrice === "Other" && customPrice)
-      pricePass = r.amount >= Number(customPrice);
+      pricePass = r.amount >= Number(customPrice.replace(/[^0-9.-]+/g, ""));
     
     return categoryPass && pricePass;
 
@@ -308,12 +310,10 @@ function App() {
             </select>
 
             {filterPrice === "Other" && (
-              <input type="number"
-              placeholder="Enter amount"
+              <CurrencyInput 
               value={customPrice}
-              onChange={(e)=>setCustomPrice(e.target.value)}
-              className="filter-input"
-             />
+              onChange={setCustomPrice}
+              className="filter-input"/>
             )}
             <button className="select-toggle-button"
             onClick={()=> {

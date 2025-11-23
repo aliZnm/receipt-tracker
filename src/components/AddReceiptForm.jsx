@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { auth, database, storage } from "../firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import CurrencyInput from "./CurrencyInput";
+
 
 export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, editingReceipt }) {
   const [store, setStore] = useState("");
@@ -62,7 +64,7 @@ export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, edit
 
 const  updateData = {
     store,
-    amount: parseFloat(amount),
+    amount: Number(amount.replace(/[^0-9.-]+/g, "")),
     date,
     category,
     uid: user.uid,
@@ -113,13 +115,11 @@ setIsSubmitting(false);
                     value={store}
                     onChange={(e) => setStore(e.target.value)}
                     className="styled-input"/>
-                <input
-                    type="number"
-                    step="0.01"
-                    placeholder="Amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="styled-input"/>
+                <CurrencyInput 
+                value={amount}
+                onChange={setAmount}
+                className="styled-input"
+                />
                 
                 <select value={category} onChange={(e)=> setCategory(e.target.value)} className="category-select">
                     <option value="" disabled hidden>Select Category</option>
