@@ -16,7 +16,6 @@ const handleEmailSignup = async (e) => {
 
     try {
         await createUserWithEmailAndPassword(auth, email, password);
-        alert("Signup Successful!");
         setEmail("");
         setPassword("");
     }
@@ -29,7 +28,6 @@ const handleGoogleSignup = async () =>{
     const provider = new GoogleAuthProvider();
     try{
         await signInWithPopup(auth, provider);
-        alert("Signed up with Google Successfully!");
     }
     catch(err){
         setError(formatAuthError(err));

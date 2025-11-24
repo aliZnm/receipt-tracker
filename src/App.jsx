@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
 import { auth, database } from "./firebaseConfig";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignUpForm";
@@ -31,6 +31,12 @@ function App() {
   const [filterPrice, setFilterPrice] = useState("All");
   const [customPrice, setCustomPrice] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [nameInput, setNameInput] = useState("");
+  const [nameStatus, setNameStatus] = useState("");
+  const [editingName, setEditingName] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailStatus, setEmailStatus] = useState("");
+  const [editingEmail, setEditingEmail] = useState(false);
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -49,6 +55,27 @@ function App() {
       return () => unsubscribe();
     }
   }, []);
+
+  useEffect(() => {
+    setNameInput(user?.displayName || "");
+    setNameStatus("");
+    setEditingName(false);
+    setEmailInput(user?.email || "");
+    setEmailStatus("");
+    setEditingEmail(false);
+  }, [user]);
+
+  useEffect(() => {
+    if (nameStatus !== "Name updated") return;
+    const timer = setTimeout(() => setNameStatus(""), 2500);
+    return () => clearTimeout(timer);
+  }, [nameStatus]);
+
+  useEffect(() => {
+    if (emailStatus !== "Email updated") return;
+    const timer = setTimeout(() => setEmailStatus(""), 2500);
+    return () => clearTimeout(timer);
+  }, [emailStatus]);
 
   useEffect(() => {
     if (!user) return;
@@ -119,6 +146,61 @@ function App() {
     setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
   };
 
+  const handleUpdateName = async (e) => {
+    e.preventDefault();
+    if (!user) return;
+    if (!auth.currentUser) {
+      setNameStatus("Please sign in again to update your name.");
+      return;
+    }
+
+    const trimmedName = nameInput.trim();
+    if (!trimmedName) {
+      setNameStatus("Please enter a name.");
+      return;
+    }
+
+    try {
+      setNameStatus("Saving...");
+      await updateProfile(auth.currentUser, { displayName: trimmedName });
+      setUser(auth.currentUser);
+      setNameStatus("Name updated");
+      setEditingName(false);
+    } catch (err) {
+      console.error("Failed to update name:", err);
+      setNameStatus("Failed to update name. Try again.");
+    }
+  };
+
+  const handleUpdateEmail = async (e) => {
+    e.preventDefault();
+    if (!user || !auth.currentUser) {
+      setEmailStatus("Please sign in again to update your email.");
+      return;
+    }
+
+    const trimmedEmail = emailInput.trim();
+    if (!trimmedEmail) {
+      setEmailStatus("Please enter an email.");
+      return;
+    }
+
+    try {
+      setEmailStatus("Saving...");
+      await updateEmail(auth.currentUser, trimmedEmail);
+      setUser(auth.currentUser);
+      setEmailStatus("Email updated");
+      setEditingEmail(false);
+    } catch (err) {
+      console.error("Failed to update email:", err);
+      let friendly = "Failed to update email. Try again.";
+      if (err.code === "auth/invalid-email") friendly = "Please enter a valid email address.";
+      else if (err.code === "auth/email-already-in-use") friendly = "This email is already in use.";
+      else if (err.code === "auth/requires-recent-login") friendly = "Please sign in again to update your email.";
+      setEmailStatus(friendly);
+    }
+  };
+
 
 
   const handleDeleteAccount = async () =>{
@@ -170,12 +252,76 @@ function App() {
           <h1>Account Info</h1>
           <div className="info-row">
             <span className="label">Name:</span>
-            <span>{user.displayName || "No name set"}</span>
+            {editingName ? (
+              <form className="name-inline-form" onSubmit={handleUpdateName}>
+                <input
+                  type="text"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setEditingName(false);
+                      setNameStatus("");
+                      setNameInput(user?.displayName || "");
+                    }
+                  }}
+                  placeholder="Enter your name"
+                  autoFocus
+                />
+              </form>
+            ) : (
+              <div className="name-display">
+                <span className="value">{user.displayName || "No name set"}</span>
+                <button
+                  type="button"
+                  className="edit-name-button"
+                  onClick={() => {
+                    setEditingName(true);
+                    setNameStatus("");
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
           </div>
+          {nameStatus && <p className="name-status-inline">{nameStatus}</p>}
           <div className="info-row">
             <span className="label">Email:</span>
-            <span>{user.email}</span>
+            {editingEmail ? (
+              <form className="name-inline-form" onSubmit={handleUpdateEmail}>
+                <input
+                  type="email"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setEditingEmail(false);
+                      setEmailStatus("");
+                      setEmailInput(user?.email || "");
+                    }
+                  }}
+                  placeholder="Enter your email"
+                  autoFocus
+                />
+              </form>
+            ) : (
+              <div className="name-display">
+                <span className="value">{user.email}</span>
+                <button
+                  type="button"
+                  className="edit-name-button"
+                  onClick={() => {
+                    setEditingEmail(true);
+                    setEmailStatus("");
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
+            )}
           </div>
+          {emailStatus && <p className="name-status-inline">{emailStatus}</p>}
           <button className="back-button" onClick={() => setActivePage(null)}>
             Back
           </button>

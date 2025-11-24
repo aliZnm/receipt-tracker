@@ -232,3 +232,51 @@
     color: #7da0d6;
 }
 
+.account-info-page .name-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.account-info-page .edit-name-button {
+  background: rgba(133, 170, 242, 0.15);
+  color: #e9f4ff;
+  border: 1px solid rgba(133, 170, 242, 0.4);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.account-info-page .edit-name-button:hover {
+  background: rgba(133, 170, 242, 0.25);
+  transform: translateY(-0.5px);
+}
+
+.account-info-page .name-inline-form {
+  display: flex;
+  align-items: center;
+}
+
+.account-info-page .name-inline-form input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(133, 170, 242, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  color: #e9f4ff;
+  min-width: 180px;
+}
+
+.account-info-page .name-inline-form input:focus {
+  outline: none;
+  border-color: #4fc3ff;
+  box-shadow: 0 0 0 2px rgba(79, 195, 255, 0.25);
+}
+
+.account-info-page .name-status-inline {
+  margin: -8px 0 0 0;
+  font-size: 0.9rem;
+  color: #ffb3b3;
+  text-align: right;
+}
