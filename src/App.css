@@ -284,6 +284,11 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
   filter: drop-shadow(0 0 6px rgba(47, 104, 197, 0.35));
 }
 
+.nav-spacer {
+  width: 60px;
+  height: 1px;
+}
+
 
 
 
@@ -1243,4 +1248,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   align-items: center;
 }
-

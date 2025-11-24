@@ -1,19 +1,9 @@
 // src/components/Navbar.jsx
 
-export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
+export default function Navbar({ onOpenSettings, userEmail }) {
   return (
     <header className="top-navbar">
-
-      {/* LEFT — Logout button */}
-      <button
-        type="button"
-        className="logout-button"
-        onClick={onLogout}
-      >
-         Logout
-      </button>
-
-      {/* CENTER — Brand */}
+      <div className="nav-spacer" aria-hidden="true" />
       <div className="nav-brand">
         <img src="/src/assets/receipt-logo.svg" alt="Receipt Tracker logo" className="brand-logo" />
         <span className="brand-name">ReceiptTracker</span>

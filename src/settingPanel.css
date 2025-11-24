@@ -75,6 +75,16 @@
   background: rgba(255, 50, 50, 0.25);
 }
 
+.logout-item {
+  color: #e9f4ff;
+  font-weight: 600;
+}
+
+.logout-item:hover {
+  background: rgba(79, 195, 255, 0.15);
+  color: #7fd4ff;
+}
+
 .panel-close {
   position: absolute;
   left: -40px;     
@@ -279,4 +289,24 @@
   font-size: 0.9rem;
   color: #ffb3b3;
   text-align: right;
+}
+
+.account-info-page .delete-account-inline {
+  align-self: center;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 10px;
+}
+
+.account-info-page .delete-account-inline:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 12px 30px rgba(231, 76, 60, 0.55);
 }

@@ -201,6 +201,23 @@ function App() {
     }
   };
 
+  const deleteConfirmModal = showDeleteConfirm && (
+    <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
+      <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+        <h3>Confirm Account Deletion</h3>
+        <p>This will permanently delete your account and all receipts. Are you sure?</p>
+        <div className="delete-confirm-buttons">
+          <button className="delete-cancel-button" onClick={()=> setShowDeleteConfirm(false)}>
+            Cancel
+          </button>
+          <button className="confirm-button" onClick={handleDeleteAccount}>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
 
 
   const handleDeleteAccount = async () =>{
@@ -244,8 +261,8 @@ function App() {
   if(activePage === "accountInfo"){
     return(
       <>
+      {deleteConfirmModal}
       <Navbar 
-          onLogout={handleLogout}
           userEmail={user?.email}
         />
         <div className="account-info-page">
@@ -322,6 +339,13 @@ function App() {
             )}
           </div>
           {emailStatus && <p className="name-status-inline">{emailStatus}</p>}
+          <button
+            type="button"
+            className="delete-account-inline"
+            onClick={() => setShowDeleteConfirm(true)}
+          >
+            Delete Account
+          </button>
           <button className="back-button" onClick={() => setActivePage(null)}>
             Back
           </button>
@@ -334,27 +358,11 @@ function App() {
   return (
     <>
     <Navbar 
-            onLogout={handleLogout}
             onOpenSettings={() => setShowAccountPanel(true)}
             userEmail={user?.email}
           />
 
-{showDeleteConfirm && (
-          <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
-            <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
-              <h3>Confirm Account Deletion</h3>
-              <p>This will permanently delete your account and all receipts. Are you sure?</p>
-              <div className="delete-confirm-buttons">
-                <button className="delete-cancel-button" onClick={()=> setShowDeleteConfirm(false)}>
-                  Cancel
-                </button>
-                <button className="confirm-button" onClick={handleDeleteAccount}>
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+    {deleteConfirmModal}
 
     <div className="app-root">
       
@@ -638,9 +646,16 @@ function App() {
                   setShowAccountPanel(false);
                 }}>
                   Password Recovery</div>
-              
-              <div className="panel-item danger-item"
-              onClick={() => setShowDeleteConfirm(true)}>Delete Account</div>
+
+              <div
+                className="panel-item logout-item"
+                onClick={async () => {
+                  setShowAccountPanel(false);
+                  await handleLogout();
+                }}
+              >
+                Logout
+              </div>
 
               <button className="panel-close" onClick={() => setShowAccountPanel(false)}>
                 <img className="arrow-img" src="/src/assets/arrow-icon.png" alt="" style={{width: "25px"}}/>
