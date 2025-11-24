@@ -1,6 +1,16 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signOut,
+  updateProfile,
+  updateEmail,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  reauthenticateWithPopup,
+  GoogleAuthProvider,
+  reload
+} from "firebase/auth";
 import { auth, database } from "./firebaseConfig";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignUpForm";
@@ -37,6 +47,7 @@ function App() {
   const [emailInput, setEmailInput] = useState("");
   const [emailStatus, setEmailStatus] = useState("");
   const [editingEmail, setEditingEmail] = useState(false);
+  const [emailPassword, setEmailPassword] = useState("");
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -63,6 +74,7 @@ function App() {
     setEmailInput(user?.email || "");
     setEmailStatus("");
     setEditingEmail(false);
+    setEmailPassword("");
   }, [user]);
 
   useEffect(() => {
@@ -184,19 +196,49 @@ function App() {
       setEmailStatus("Please enter an email.");
       return;
     }
+    if (trimmedEmail === auth.currentUser.email) {
+      setEmailStatus("Email is unchanged.");
+      return;
+    }
 
     try {
       setEmailStatus("Saving...");
+      const providerData = auth.currentUser.providerData || [];
+      const usesPassword = providerData.some((p) => p.providerId === "password");
+      const usesGoogle = providerData.some((p) => p.providerId === "google.com");
+
+      if (usesPassword) {
+        if (!emailPassword) {
+          setEmailStatus("Please enter your current password.");
+          return;
+        }
+        const credential = EmailAuthProvider.credential(auth.currentUser.email, emailPassword);
+        await reauthenticateWithCredential(auth.currentUser, credential);
+      } else if (usesGoogle) {
+        await reauthenticateWithPopup(auth.currentUser, new GoogleAuthProvider());
+      } else if (providerData[0]) {
+        await reauthenticateWithPopup(auth.currentUser, new GoogleAuthProvider());
+      }
+
       await updateEmail(auth.currentUser, trimmedEmail);
+      await reload(auth.currentUser);
       setUser(auth.currentUser);
       setEmailStatus("Email updated");
       setEditingEmail(false);
+      setEmailPassword("");
     } catch (err) {
       console.error("Failed to update email:", err);
       let friendly = "Failed to update email. Try again.";
       if (err.code === "auth/invalid-email") friendly = "Please enter a valid email address.";
       else if (err.code === "auth/email-already-in-use") friendly = "This email is already in use.";
       else if (err.code === "auth/requires-recent-login") friendly = "Please sign in again to update your email.";
+      else if (err.code === "auth/wrong-password") friendly = "Incorrect password. Please try again.";
+      else if (err.code === "auth/popup-closed-by-user") friendly = "Re-auth cancelled. Please try again.";
+      else if (err.code === "auth/popup-blocked") friendly = "Please allow popups to re-authenticate.";
+      else if (err.code === "auth/network-request-failed") friendly = "Network issue. Please try again.";
+      else if (err.code === "auth/missing-password") friendly = "Please enter your current password.";
+      else if (err.code === "auth/operation-not-allowed") friendly = "Email updates are disabled. Check your Firebase Auth settings.";
+      else friendly = `${friendly} (${err.code || "unknown error"})`;
       setEmailStatus(friendly);
     }
   };
@@ -306,21 +348,33 @@ function App() {
           <div className="info-row">
             <span className="label">Email:</span>
             {editingEmail ? (
-              <form className="name-inline-form" onSubmit={handleUpdateEmail}>
-                <input
-                  type="email"
-                  value={emailInput}
-                  onChange={(e) => setEmailInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") {
-                      setEditingEmail(false);
-                      setEmailStatus("");
-                      setEmailInput(user?.email || "");
-                    }
-                  }}
-                  placeholder="Enter your email"
-                  autoFocus
-                />
+              <form className="email-inline-form" onSubmit={handleUpdateEmail}>
+                <div className="email-inline-row">
+                  <input
+                    type="email"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Escape") {
+                        setEditingEmail(false);
+                        setEmailStatus("");
+                        setEmailInput(user?.email || "");
+                        setEmailPassword("");
+                      }
+                    }}
+                    placeholder="Enter your email"
+                    autoFocus
+                  />
+                  <button type="submit" className="inline-save-btn">Save</button>
+                </div>
+                {(auth.currentUser?.providerData || []).some((p) => p.providerId === "password") && (
+                  <input
+                    type="password"
+                    value={emailPassword}
+                    onChange={(e) => setEmailPassword(e.target.value)}
+                    placeholder="Current password (required to change email)"
+                  />
+                )}
               </form>
             ) : (
               <div className="name-display">

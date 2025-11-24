@@ -291,6 +291,48 @@
   text-align: right;
 }
 
+.account-info-page .email-inline-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.account-info-page .email-inline-form .email-inline-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.account-info-page .email-inline-form input {
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid rgba(133, 170, 242, 0.4);
+  background: rgba(0, 0, 0, 0.25);
+  color: #e9f4ff;
+}
+
+.account-info-page .email-inline-form input:focus {
+  outline: none;
+  border-color: #4fc3ff;
+  box-shadow: 0 0 0 2px rgba(79, 195, 255, 0.25);
+}
+
+.account-info-page .email-inline-form .inline-save-btn {
+  background: linear-gradient(135deg, #2a8bff, #4fc3ff);
+  color: #ffffff;
+  border: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-info-page .email-inline-form .inline-save-btn:hover {
+  transform: translateY(-0.5px);
+  box-shadow: 0 8px 20px rgba(79, 195, 255, 0.45);
+}
+
 .account-info-page .delete-account-inline {
   align-self: center;
   background: linear-gradient(135deg, #c0392b, #e74c3c);
