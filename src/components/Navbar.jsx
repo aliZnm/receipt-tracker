@@ -15,7 +15,7 @@ export default function Navbar({ onLogout, onOpenSettings, userEmail }) {
 
       {/* CENTER — Brand */}
       <div className="nav-brand">
-        <span className="brand-dot" />
+        <img src="/src/assets/receipt-logo.svg" alt="Receipt Tracker logo" className="brand-logo" />
         <span className="brand-name">ReceiptTracker</span>
       </div>
 
