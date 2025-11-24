@@ -57,13 +57,13 @@ export default function AddButton({ buttonLabel = "+", onAddManual, onAddScan })
             className="option-button top animate-pop open"
             onClick={() => { onAddManual(); setOpen(false); }}
           >
-            <img src="/src/assets/manual-logo.png" style={{width: "27px", marginLeft: "7px", marginTop: "2px"}}/>
+            <img src="/src/assets/manual-logo.png" style={{width: "25px", marginLeft: "7px", marginTop: "3px"}}/>
           </button>
           <button
             className="option-button bottom animate-pop open"
             onClick={() => { onAddScan(); setOpen(false); }}
           >
-            <img src="/src/assets/scan-logo.png" style={{width: "30px", marginLeft: "1px", marginTop: "2px"}}/>
+            <img src="/src/assets/scan-logo.png" style={{width: "25px", marginLeft: "1px", marginTop: "4px"}}/>
           </button>
         </div>
       )}

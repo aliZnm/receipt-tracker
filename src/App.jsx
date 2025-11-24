@@ -288,78 +288,92 @@ function App() {
         <section className="receipts-section">
           <div className="receipt-tools">
             
-            <div className="filter-row" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+      <div className="filter-row" style={{ display: "flex", alignItems: "center", gap: "10px", marginTop: "40px" }}>
+        <div className="filter-wrapper" style={{ position: "relative" }}>
+          <button
+             className="filter-toggle-button"
+             onClick={() => setShowFilters(prev => !prev)}
+          >
+            <img src="/src/assets/filter-icon.png" style={{ width: "20px" }} />
+          </button>
 
-              <div className="filter-wrapper" style={{ position: "relative" }}>
-                <button className="filter-toggle-button "
-                onClick={()=>setShowFilters(prev => !prev)}>
-                <img  src="/src/assets/filter-icon.png" style={{width: "20px"}}/>
-              </button>
+    {showFilters && (
+      <div className="filter-panel" style={{ display: "flex", gap: "5px", padding: "10px" }}>
+        <select
+          value={filterCategory}
+          onChange={(e) => setFilterCategory(e.target.value)}
+          className="filter-dropdown"
+        >
 
-            {showFilters &&(
-              <div className="filter-panel">
-                <select 
-                value={filterCategory} 
-                onChange={(e)=> setFilterCategory(e.target.value)} className="filter-dropdown">
-                <option value="All">All Categories</option>
-              {Array.from(new Set(receipts.map((r) =>  r.category))).map((cat) =>(
-                
-                <option value={cat} key={cat}>{cat}</option>
-              ))}
-            </select>
+          <option value="All">All Categories</option>
+          {Array.from(new Set(receipts.map((r) => r.category))).map((cat) => (
+            
+            <option value={cat} key={cat}>{cat}</option>
+          ))}
+        </select>
 
-            <select value={filterPrice}
-            onChange={(e) =>{
-              setFilterPrice(e.target.value);
-              if(e.target.value !== "Other") setCustomPrice("");
-            }} 
-            className="filter-dropdown">
-              <option value="All">All Prices</option>
-              <option value="20">Above $20</option>
-              <option value="50">Above $50</option>
-              <option value="100">Above $100</option>
-              <option value="Other">Other Amount</option>
-            </select>
-          </div>
-            )}
+        <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+        <select
+          value={filterPrice}
+          onChange={(e) => {
+            setFilterPrice(e.target.value);
+            if (e.target.value !== "Other") setCustomPrice("");
+          }}
+          className="filter-dropdown"
+        >
 
-            {filterPrice === "Other" && (
-              <CurrencyInput 
-              value={customPrice}
-              onChange={setCustomPrice}
-              className="filter-input"
-              style={{ position: "absolute", top: "75px", left: 0 }}
-              />
-            )}
-          </div>
+          <option value="All">All Prices</option>
+          <option value="20">Above $20</option>
+          <option value="50">Above $50</option>
+          <option value="100">Above $100</option>
+          <option value="Other">Other Amount</option>
+        </select>
 
-            <button className="select-toggle-button toggle-button"
-            onClick={()=> {
-              setSelectMode((prev) => !prev);
-              setSelectedReceipts([]);
-            }}>
-              {selectMode ? "Cancel" : <img src="/src/assets/select-icon.png" style={{width: "20px"}}></img>}
-            </button>
+        {filterPrice === "Other" && (
+          <CurrencyInput
+            value={customPrice}
+            onChange={setCustomPrice}
+            className="filter-input"
+            placeholder="$00.00"
+          />
+        )}
+      </div>
+      </div>
+    )}
+  </div>
 
-            {selectMode && (
-              <button 
-              className="bulk-delete-button"
-              disabled={selectedReceipts.length === 0}
-              onClick={()=>{
-                selectedReceipts.forEach((id) => handleDelete(id));
-                setSelectedReceipts([]);
-                setSelectMode(false);
-              }}>
-                Delete ({selectedReceipts.length})
-              </button>
-            )}
-            </div>
+  {/*receipts selection*/}
+  <button
+    className="select-toggle-button toggle-button"
+    onClick={() => {
+      setSelectMode((prev) => !prev);
+      setSelectedReceipts([]);
+    }}
+  >
+    {selectMode ? "Cancel" : <img src="/src/assets/select-icon.png" style={{ width: "20px" }} />}
+  </button>
+
+  {/*delete selected*/}
+  {selectMode && (
+    <button
+      className="bulk-delete-button"
+      disabled={selectedReceipts.length === 0}
+      onClick={() => {
+        selectedReceipts.forEach((id) => handleDelete(id));
+        setSelectedReceipts([]);
+        setSelectMode(false);
+      }}
+    >
+      Delete ({selectedReceipts.length})
+    </button>
+  )}
+</div>
   
             
             
           </div>
           <div className="receipt-grid"
-          style={{ marginTop: showFilters ? "75px" : "15px" }}>
+          style={{ marginTop: showFilters ? (filterPrice === "Other" ? "120px" : "80px") : "20px" }}>
             {receipts.length === 0 && (
               <p className="empty-text">
                 You have no receipts yet. Tap “Add Receipt” to get started.

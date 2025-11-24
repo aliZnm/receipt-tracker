@@ -599,8 +599,8 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 }
 
 .option-button {
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   border: none;
   color: white;
@@ -1125,11 +1125,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .select-toggle-button{
   background-color:#041e3b;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: bold;
   margin-left: 15px;
-  color: white;
+  color: #92b3e5;
   border-radius: 5px;
   cursor: pointer;
+  padding: 3px 6px;
+}
+.select-toggle-button:hover{
+  color: #e3eeff;
 }
 
 .receipt-card.selected {
@@ -1156,19 +1161,22 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .bulk-delete-button:hover:not(:disabled) {
-  background: #e60000;
-  transform: translateY(-1px);
+  transform: translateY(-0.2px);
+  color: #ff7878;
+  border: 1px solid #ff7878;
 }
 
 
 .filter-input {
-  width: 130px;         
-  height: 36px;         
+  width: 138px;         
+  height: 30px;         
   padding-left: 10px;
   border-radius: 8px;
   border: 1px solid rgba(110, 145, 215, 0.6); 
   background: rgba(3, 18, 45, 0.85); 
   color: white;
+  font-size: 14px;
+
 }
 
 .filter-input::placeholder{
@@ -1196,6 +1204,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   font-size: 16px;
   transition: 0.2s;
+  position: relative; 
+  z-index: 2;
 }
 
 .filter-toggle-button:hover {
@@ -1204,19 +1214,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .filter-panel {
-  position: absolute; 
-  top: 40px;        
+  position: absolute;
+  top: 40px; /* distance from filter button */
   left: 0;
   display: flex;
-  align-items: center;
   gap: 10px;
-  background: rgba(5, 33, 76, 0.95);
   padding: 10px;
+  background: rgba(5, 33, 76, 0.95);
   border: 1px solid rgba(86,127,204,0.65);
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  flex-wrap: wrap;
+  align-items: flex-start;
   z-index: 10;
-  min-width: 300px;
+  min-width: 316px;
 }
 
 .filter-row {
@@ -1224,7 +1235,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   align-items: center;
 }
 
-.filter-panel {
-  display: flex;
-  align-items: center;
-}
+
