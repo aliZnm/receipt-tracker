@@ -5,11 +5,17 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import CurrencyInput from "./CurrencyInput";
 
 
-export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, editingReceipt }) {
+export default function AddReceiptForm({ 
+    onAddReceipt,
+    onSaveEdit, 
+    onCancel, 
+    editingReceipt 
+}) {
   const [store, setStore] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [category, setCategory] = useState(editingReceipt?.category || "");
@@ -18,8 +24,10 @@ export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, edit
   useEffect(()=>{
     if(editingReceipt){
         setStore(editingReceipt.store);
-        setAmount(editingReceipt.amount);
+        setAmount(editingReceipt.amount.toString());
         setDate(editingReceipt.date);
+        setCategory(editingReceipt.category)
+        setPreviewUrl(editingReceipt.imageUrl || null);
         setFile(null);
     }
   }, [editingReceipt])
@@ -49,7 +57,9 @@ export default function AddReceiptForm({ onAddReceipt,onSaveEdit, onCancel, edit
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "receipt_upload");
-    const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dc77fisjp/image/upload";
+    
+    const CLOUDINARY_URL = 
+    "https://api.cloudinary.com/v1_1/dc77fisjp/image/upload";
     
     const response = await fetch(CLOUDINARY_URL, {
       method: "POST",
@@ -85,27 +95,30 @@ else{
         newReceipt
     );
 
-    const receiptWithId = {id: docRef.id, ...newReceipt};
-    onAddReceipt(receiptWithId);
+    onAddReceipt({id: docRef.id, ...newReceipt});
 }
 
 setStore("");
 setAmount("");
 setDate("");
+setCategory("");
 setFile(null);
-setIsSubmitting(false);
+setPreviewUrl(null);
+//setIsSubmitting(false);
     }
     catch(err){
         console.error(err);
         setError("Something went wrong.");
-        setIsSubmitting(false);
     }
+    setIsSubmitting(false);
 };
   
 
   return (
     <div className="recept-form-container">
-        <button type="button" className="cancel-button" onClick={onCancel}> <span style={{marginBottom: "5px"}}>x</span></button>
+        <button type="button" className="cancel-button" onClick={onCancel}>
+            <span style={{marginBottom: "5px"}}>x</span>
+        </button>
         
         <form onSubmit={handleSubmit} className="receipt-form">
             <div className="input-column">
@@ -121,8 +134,13 @@ setIsSubmitting(false);
                 className="styled-input"
                 />
                 
-                <select value={category} onChange={(e)=> setCategory(e.target.value)} className="category-select">
-                    <option value="" disabled hidden>Select Category</option>
+                <select 
+                value={category} 
+                onChange={(e)=> setCategory(e.target.value)} 
+                className="category-select">
+                    <option value="" disabled hidden>
+                        Select Category
+                    </option>
                     <option value="Grocery">Grocery</option>
                     <option value="Resturants">Resturants</option>
                     <option value="Bills">Bills</option>
@@ -139,7 +157,72 @@ setIsSubmitting(false);
             
             <div className="upload-box small">
                 <label className="upload-label">
+                   {previewUrl && !file &&(
+                    <div style={{textAlign: "center"}}>
+                        <img src={previewUrl}
+                        style={{
+                            width: "120px",
+                            marginBottom: "80px",
+                            borderRadius: "8px",
+                            border: "2px solid #ccc"
+                        }}/>
+
+                        <p>Current Image</p>
+                        <p style={{fontSize: "13px"}}>Upload new image</p>
+                    </div>
+                   )}
                     {file ? (
+                        <span className="upload-selected">📄 {file.name}</span>
+                    ) : !previewUrl ? (
+                    <>
+                    <span className="upload-icon">
+                        <img 
+                        src="/src/assets/upload-logo.png" 
+                        style={{width: "50px", marginTop: "15px"}}/>
+                    </span>
+                    
+                    <p>Upload Receipt Image</p>
+                    <span className="upload-hint">Click to select a file</span>
+                    </>
+                ) : null}
+                
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                        setFile(e.target.files[0] || null);
+
+                        if(e.target.files[0]){
+                            setPreviewUrl(URL.createObjectURL(e.target.files[0]));
+                        }
+                    }
+                    }/>
+                </label>
+            </div>
+            
+            {error && <p className="error-text">{error}</p>}
+            
+            <button
+                type="submit"
+                className="submit-button"
+                disabled={isSubmitting}>
+            
+            {isSubmitting 
+            ? (editingReceipt 
+                ? "Saving..." 
+                : "Adding..." )
+            : (editingReceipt 
+            ? "Save" 
+            : "Add")}
+            </button>
+        </form>
+    </div>
+  );
+}
+
+
+
+{/* {file ? (
                         <span className="upload-selected">📄 {file.name}</span>
                     ) : (
                     <>
@@ -170,5 +253,4 @@ setIsSubmitting(false);
             </button>
         </form>
     </div>
-  );
-}
+  ); */}
