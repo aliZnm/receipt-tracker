@@ -221,36 +221,3 @@ setPreviewUrl(null);
 }
 
 
-
-{/* {file ? (
-                        <span className="upload-selected">📄 {file.name}</span>
-                    ) : (
-                    <>
-                    <span className="upload-icon">
-                        <img src="/src/assets/upload-logo.png" style={{width: "50px", marginTop: "15px"}}/>
-                    </span>
-                    <p>Upload Receipt Image</p>
-                    <span className="upload-hint">Click to select a file</span>
-                    </>
-                )}
-                
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFile(e.target.files[0] || null)}/>
-                </label>
-            </div>
-            
-            {error && <p className="error-text">{error}</p>}
-            
-            <button
-                type="submit"
-                className="submit-button"
-                disabled={isSubmitting}>
-            {isSubmitting 
-            ? (editingReceipt ? "Saving..." : "Adding..." )
-            : (editingReceipt ? "Save" : "Add")}
-            </button>
-        </form>
-    </div>
-  ); */}

@@ -1135,6 +1135,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .select-toggle-button:hover{
   color: #e3eeff;
+  background-color: rgba(110, 145, 215, 0.2);
+;
 }
 
 .receipt-card.selected {
