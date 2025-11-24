@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import formatAuthError from "../utils/formatAuthError";
 
 export default function LoginForm({onSwitch }){
     const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ export default function LoginForm({onSwitch }){
             setPassword("");
         }
         catch (err){
-            setError("Invalid email or password. Try again.");
+            setError(formatAuthError(err));
             console.error(err);
         }
     };
@@ -28,7 +29,7 @@ export default function LoginForm({onSwitch }){
             alert("Logged in with Google Successfully!");
         }
         catch(err){
-            setError(err.message);
+            setError(formatAuthError(err));
         }
     };
     

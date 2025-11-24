@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebaseConfig";
+import formatAuthError from "../utils/formatAuthError";
 
 
 export default function SignupForm( { onSwitch }){
@@ -20,7 +21,7 @@ const handleEmailSignup = async (e) => {
         setPassword("");
     }
     catch(err){
-        setError(err.message);
+        setError(formatAuthError(err));
     }
 };
 
@@ -31,7 +32,7 @@ const handleGoogleSignup = async () =>{
         alert("Signed up with Google Successfully!");
     }
     catch(err){
-        setError(err.message);
+        setError(formatAuthError(err));
     }
 };
 
