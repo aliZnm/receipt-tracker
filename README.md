@@ -53,8 +53,8 @@ Open the URL shown in the terminal (usually http://localhost:5173) to access the
 ---
 
 ## Features
-- User authentification via email/password
-- Add, Edit, Delete Receipts
+- User authentication via email/password
+- Add, Edit, and Delete Receipts
 - Upload and display receipt images
 - Store and retrieve receipts in Firestore
 - Responsive design for desktop and mobile
@@ -67,6 +67,6 @@ Open the URL shown in the terminal (usually http://localhost:5173) to access the
 
 ## Troubleshooting
 - **Cannot log in/Firebase error:** Check your internet connection and make sure your email/password are correctly enabled in Firebase Auth.
-- **App does not load:** Ensure Node.js and npm are both installed correctly. Run npm install again if necessary.
+- **App does not load:** Ensure Node.js and npm are both installed correctly. Run `npm install` again if necessary.
 - **Development server errors:** Stop any other processing using the same port or restart your terminal
 
