@@ -145,11 +145,9 @@ function App() {
     setReceipts((prev) => prev.map((r)=> (r.id === updated.id ? updated : r)));
   };
 
-  const handleUpdateName = async (e) => {
-    e.preventDefault();
-    if (!user) return;
-    if (!auth.currentUser) {
-      setNameStatus("Please sign in again to update your name.");
+  const handleUpdateName = async () => {
+    if (!editingName){
+      setEditingName(true);
       return;
     }
 
@@ -169,6 +167,10 @@ function App() {
       console.error("Failed to update name:", err);
       setNameStatus("Failed to update name. Try again.");
     }
+    finally{
+      setEditingName(false);
+    }
+    
   };
 
   const handleDeleteAccount = async () =>{
@@ -326,38 +328,27 @@ function App() {
           <h1>Account Info</h1>
           <div className="info-row">
             <span className="label">Name:</span>
-            {editingName ? (
-              <form className="name-inline-form" onSubmit={handleUpdateName}>
-                <input
-                  type="text"
-                  value={nameInput}
-                  onChange={(e) => setNameInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") {
-                      setEditingName(false);
-                      setNameStatus("");
-                      setNameInput(user?.displayName || "");
-                    }
-                  }}
-                  placeholder="Enter your name"
-                  autoFocus
-                />
-              </form>
+            <div className="value-container">
+              {!editingName ? (
+              <span className="name-display">{user.displayName || "No Name"}</span>
             ) : (
-              <div className="name-display">
-                <span className="value">{user.displayName || "No name set"}</span>
-                <button
-                  type="button"
-                  className="edit-name-button"
-                  onClick={() => {
-                    setEditingName(true);
-                    setNameStatus("");
-                  }}
-                >
-                  Edit
-                </button>
-              </div>
+              <input type="text"
+                value={nameInput}
+                onChange={(e) => setNameInput(e.target.value)}
+                placeholder="Enter Name"
+                className="styled-input"
+                autoFocus
+            />
             )}
+            
+            <button
+            type="button"
+            className="edit-name-button"
+            onClick={handleUpdateName}>
+              {editingName ? "Confirm" : "Edit"}
+            </button>
+          </div>
+      
           </div>
           {nameStatus && <p className="name-status-inline">{nameStatus}</p>}
           <div className="info-row">

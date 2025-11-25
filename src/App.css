@@ -474,10 +474,21 @@ box-shadow: 0 3px 90px rgba(0, 150, 255, 0.35);
 
 /* Inputs row */
 
-.input-row {
+.info-row {
   display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.label {
+  width: 100px; 
+  font-weight: bold;
+}
+
+.value-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
 }
 
 .styled-input {
