@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import {
   onAuthStateChanged,
   signOut,
-  updateProfile
+  updateProfile,
+  EmailAuthProvider,
+  reauthenticateWithCredential
 } from "firebase/auth";
 import { auth, database } from "./firebaseConfig";
 import LoginForm from "./components/LoginForm";
@@ -38,6 +40,11 @@ function App() {
   const [nameInput, setNameInput] = useState("");
   const [nameStatus, setNameStatus] = useState("");
   const [editingName, setEditingName] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
+  const [deleteError, setDeleteError] = useState("");
+  const [showFinalDeleteConfirm, setShowFinalDeleteConfirm] = useState(false);
+  const [deleteVerifying, setDeleteVerifying] = useState(false);
+  const [deleteDeleting, setDeleteDeleting] = useState(false);
 
   // set to true if you want to bypass auth during testing
   const developerMode = false;
@@ -164,28 +171,10 @@ function App() {
     }
   };
 
-  const deleteConfirmModal = showDeleteConfirm && (
-    <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
-      <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
-        <h3>Confirm Account Deletion</h3>
-        <p>This will permanently delete your account and all receipts. Are you sure?</p>
-        <div className="delete-confirm-buttons">
-          <button className="delete-cancel-button" onClick={()=> setShowDeleteConfirm(false)}>
-            Cancel
-          </button>
-          <button className="confirm-button" onClick={handleDeleteAccount}>
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-
-
   const handleDeleteAccount = async () =>{
     if(!user) return;
 
+    setDeleteDeleting(true);
     try{
       const snapshot = await getDocs(collection(database, "users", user.uid, "receipts"));
       for(const docSnap of snapshot.docs){
@@ -195,14 +184,118 @@ function App() {
       await user.delete();
       setUser(null);
       setReceipts([]);
+      setActivePage(null);
+      setShowLogin(false); // default back to sign up page
       alert("Your account has been deleted.");
     }
 
     catch (err){
       console.error("Error deleting account: ", err);
       alert("Failed to delete account. Login and try again.");
+    } finally {
+      setShowFinalDeleteConfirm(false);
+      setShowDeleteConfirm(false);
+      setDeleteDeleting(false);
+      setDeletePassword("");
+      setDeleteError("");
     }
   };
+
+  const handleVerifyDeletePassword = async (e) => {
+    e.preventDefault();
+    if (!auth.currentUser || !user) {
+      setDeleteError("Please sign in again to delete your account.");
+      return;
+    }
+    const providerData = auth.currentUser.providerData || [];
+    const usesPassword = providerData.some((p) => p.providerId === "password");
+    if (!usesPassword) {
+      setDeleteError("Password sign-in required to delete this account.");
+      return;
+    }
+    if (!deletePassword.trim()) {
+      setDeleteError("Please enter your password.");
+      return;
+    }
+
+    try {
+      setDeleteVerifying(true);
+      setDeleteError("");
+      const credential = EmailAuthProvider.credential(auth.currentUser.email, deletePassword.trim());
+      await reauthenticateWithCredential(auth.currentUser, credential);
+      setShowDeleteConfirm(false);
+      setShowFinalDeleteConfirm(true);
+    } catch (err) {
+      console.error("Re-auth failed before delete:", err);
+      if (err.code === "auth/wrong-password") setDeleteError("Incorrect password. Please try again.");
+      else if (err.code === "auth/too-many-requests") setDeleteError("Too many attempts. Please try again later.");
+      else setDeleteError("Could not verify password. Please try again.");
+    } finally {
+      setDeleteVerifying(false);
+      setDeletePassword("");
+    }
+  };
+
+  const deleteConfirmModal = showDeleteConfirm && (
+    <div className="delete-confirm-overlay" onClick={() => setShowDeleteConfirm(false)}>
+      <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+        <h3>Confirm Account Deletion</h3>
+        <p>This will permanently delete your account and all receipts. Type your password to continue.</p>
+        <form onSubmit={handleVerifyDeletePassword} className="delete-confirm-form">
+          <input
+            type="password"
+            placeholder="Current password"
+            value={deletePassword}
+            onChange={(e) => setDeletePassword(e.target.value)}
+            autoFocus
+          />
+          {deleteError && <p className="name-status-inline" style={{ color: "red" }}>{deleteError}</p>}
+          <div className="delete-confirm-buttons">
+            <button
+              className="delete-cancel-button"
+              type="button"
+              onClick={() => {
+                setShowDeleteConfirm(false);
+                setDeleteError("");
+                setDeletePassword("");
+              }}
+            >
+              Cancel
+            </button>
+            <button className="confirm-button" type="submit" disabled={deleteVerifying}>
+              {deleteVerifying ? "Verifying..." : "Continue"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+
+  const finalDeleteConfirmModal = showFinalDeleteConfirm && (
+    <div className="delete-confirm-overlay" onClick={() => setShowFinalDeleteConfirm(false)}>
+      <div className="delete-confirm-modal" onClick={(e) => e.stopPropagation()}>
+        <h3>Final Confirmation</h3>
+        <p>Your account and all receipts will be permanently deleted. Do you want to proceed?</p>
+        <div className="delete-confirm-buttons">
+          <button
+            className="delete-cancel-button"
+            onClick={() => setShowFinalDeleteConfirm(false)}
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            className="confirm-button"
+            onClick={handleDeleteAccount}
+            disabled={deleteDeleting}
+            type="button"
+          >
+            {deleteDeleting ? "Deleting..." : "Delete"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
   // Not logged in: auth screen
   if (!user) {
@@ -225,6 +318,7 @@ function App() {
     return(
       <>
       {deleteConfirmModal}
+      {finalDeleteConfirmModal}
       <Navbar 
           userEmail={user?.email}
         />
@@ -275,7 +369,12 @@ function App() {
           <button
             type="button"
             className="delete-account-inline"
-            onClick={() => setShowDeleteConfirm(true)}
+            onClick={() => {
+              setDeleteError("");
+              setDeletePassword("");
+              setShowDeleteConfirm(true);
+              setShowFinalDeleteConfirm(false);
+            }}
           >
             Delete Account
           </button>
@@ -296,6 +395,7 @@ function App() {
           />
 
     {deleteConfirmModal}
+    {finalDeleteConfirmModal}
 
     <div className="app-root">
       
