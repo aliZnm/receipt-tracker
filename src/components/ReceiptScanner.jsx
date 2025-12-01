@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Tesseract from "tesseract.js";
 import preprocessImage from "./preprocessImage"; 
 
 // Normalize 
